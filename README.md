@@ -27,4 +27,5 @@ This will launch netsocadmin and its necessary backing services as defined in th
 ### TODO
 
 1. Make pre-prepared LDAP container
-2. More docs?
+2. Allow docker-compose.override.yml and doc it
+3. More docs?
