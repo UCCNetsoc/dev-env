@@ -1,0 +1,9 @@
+version: '3'
+services:
+  nsa:
+    image: docker.netsoc.co/public/netsocadmin:dev-env
+    container_name: netsocadmin
+    ports:
+      - 5050:5050
+    depends_on:
+      - db

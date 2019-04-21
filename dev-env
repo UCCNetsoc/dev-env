@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [ ! -d $1 ]; then 
+    echo "invalid component '$1'"
+else
+    docker-compose -f $1/docker-compose.yml -f backing-services/docker-compose.yml ${@:2} $1
+fi
