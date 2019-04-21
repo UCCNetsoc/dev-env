@@ -1,0 +1,7 @@
+version: '3'
+services:
+  db:
+    image: docker.netsoc.co/public/mysql:dev-env
+    container_name: nestoc-mysql
+    ports:
+      - 3306:3306
