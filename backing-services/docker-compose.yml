@@ -2,6 +2,15 @@ version: '3'
 services:
   db:
     image: docker.netsoc.co/public/mysql:dev-env
-    container_name: nestoc-mysql
+    container_name: netsoc-mysql
     ports:
       - 3306:3306
+  auth:
+    image: docker.netsoc.co/public/ldap:dev-env
+    container_name: netsoc-ldap
+    ports:
+      - 389:389
+  ubuntu:
+    image: ubuntu:latest
+    container_name: ubuntu
+    

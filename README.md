@@ -17,6 +17,27 @@ Example to start netsoc-admin
 
 This will launch netsocadmin and its necessary backing services as defined in the `docker-compose.yml` file in the `nsa` folder.
 
+Below we will outline how to work on a Netsoc service locally in conjunction with the dev-env.
+
+## Developing Locally
+
+When developing locally, you will want to mount your local code into the specific docker container so that your locally changed code is integrated with the backing services and testable. This can be done by modifying the appropriate `docker-compose.override.yml` file.
+
+Example `./nsa/docker-compose.override.yml`:
+
+```yaml
+version: '3'
+services:
+  nsa:
+    volumes:
+      # Mounts your local code into the container so that your code is run instead
+      - /path/to/local/netsocadmin:/netsocadmin/netsocadmin
+    ports:
+      # You can change the port mappings if you want
+      - 5051:5050
+
+```
+
 ## Adding a Service
 
 1. Create a folder with the name of the service as will be passed as the argument to the `dev-env` script
@@ -26,6 +47,4 @@ This will launch netsocadmin and its necessary backing services as defined in th
 
 ### TODO
 
-1. Make pre-prepared LDAP container
-2. Allow docker-compose.override.yml and doc it
-3. More docs?
+1. More docs?

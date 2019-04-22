@@ -7,3 +7,4 @@ services:
       - 5050:5050
     depends_on:
       - db
+      - auth

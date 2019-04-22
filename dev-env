@@ -3,5 +3,9 @@
 if [ ! -d $1 ]; then 
     echo "invalid component '$1'"
 else
-    docker-compose -f $1/docker-compose.yml -f backing-services/docker-compose.yml ${@:2} $1
+    if [ $2 == "up" ]; then
+        docker-compose -f $1/docker-compose.yml -f backing-services/docker-compose.yml -f $1/docker-compose.override.yml ${@:2} $1
+    else
+        docker-compose -f $1/docker-compose.yml -f backing-services/docker-compose.yml -f $1/docker-compose.override.yml ${@:2}
+    fi
 fi
