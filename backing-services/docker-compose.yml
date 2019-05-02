@@ -10,7 +10,12 @@ services:
     container_name: netsoc-ldap
     ports:
       - 389:389
-  ubuntu:
-    image: ubuntu:latest
-    container_name: ubuntu
-    
+  consul:
+    image: consul:1.4.4
+    container_name: netsoc-consul
+    environment:
+      CONSUL_BIND_INTERFACE: eth0 # ???
+    ports:
+      - 8500:8500
+      - 8600:53/udp
+      - 8400:8400

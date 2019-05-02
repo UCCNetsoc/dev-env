@@ -1,0 +1,13 @@
+version: '3'
+services:
+  windlass:
+    image: docker.netsoc.co/public/windlass:dev-env
+    container_name: windlass
+    volumes:
+      - /var/lib/lxd/unix.socket:/var/lib/lxd/unix.socket
+    ports:
+      - 5051:8080
+    depends_on:
+      - db
+      - auth
+      - consul
