@@ -25,7 +25,7 @@ GRANT
     CREATE, DROP, REFERENCES, INDEX,
     ALTER, EXECUTE, CREATE ROUTINE, ALTER ROUTINE 
 ON
-    `john\_%`.* TO 'john'@'%';
+    `%`.* TO 'john'@'%';
 
 GRANT
     SELECT, INSERT, UPDATE, DELETE,

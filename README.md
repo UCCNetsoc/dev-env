@@ -66,6 +66,9 @@ Two accounts exists in LDAP:
 | john | johns-password | admin |
 | sofia | sofias-password | member |
 
+These logins will work for the local MySQL database as well.
+Simply run `mysql -h '127.0.0.1' -P 3306 -u <user> -p` and input the respective password
+
 ## Configuration Storage
 
 We use Hashicorp Consul and Vault to store configuration and sensitive secrets.
