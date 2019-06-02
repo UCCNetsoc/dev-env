@@ -30,9 +30,10 @@ setup &
 
 echo 'deregistering from cluster'
 
-curl -v -X PUT consul:8500/v1/agent/service/deregister/vault:172.31.1.5:8200
+# Unfortunately vault cant be added a second time without clearing the config from consul in dev mode
+# Need to investigate coz it sucks
 curl -v -X DELETE consul:8500/v1/kv/netsoc/vault/?recurse=true
 
 sleep 1
 
-vault server -dev -config=/vault/config/config.hcl
+exec vault server -dev -config=/vault/config/config.hcl
