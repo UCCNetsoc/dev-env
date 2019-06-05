@@ -79,7 +79,9 @@ Locally, both have a user facing UI:
 - Consul: http://127.0.0.1:8200/ui
 - Vault: http://127.0.0.1:8500/ui
 
-Vault requires authentication. You can login with `john` as above with LDAP method or else with the Token method, the token is `netsoc`.
+Vault requires authentication. You can login with `john` as above with LDAP method or else with the Token method, the token being `netsoc`. 
+
+**NOTE** that Vault will clear all saved secrets on startup. Make use of default settings in your services that allow the service to run in dev-env without relying on Vault and use Vault for testing that your program will work with Vault.
 
 ## Adding a Service
 
