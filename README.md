@@ -14,11 +14,11 @@ We have a single simple script to take care of starting, stopping etc services a
 
 It takes multiple arguments:  
 
-1. The main component to act upon. The names for each are the names of the folders (excluding `./backing-services`)
-2. Additional docker-compose arguments, with at least one needed eg `up`, `stop`, etc
+1. docker-compose arguments, with at least one needed eg `up`, `stop`, etc
+2. The main component to act upon. The names for each are the names of the folders (excluding `./backing-services`), as well as any specific backing service
 
 Example to start netsoc-admin  
-`./dev-env nsa up`  
+`./dev-env up nsa`  
 
 This will launch netsocadmin and its necessary backing services as defined in the `docker-compose.yml` file in the `nsa` folder.
 
@@ -47,15 +47,15 @@ services:
 
 | Command                       | Description                  | Notes |
 | ------------------------------| ---------------------------- | ----- |
-| `./dev-env <service> up`        | Starts \<service\> and prints its logs in real-time               | |
-| `./dev-env <service> up -d`        | Starts \<service\>               | |
-| `./dev-env <service> ps`           | Show running containers      | |
-| `./dev-env <service> logs -f`      | See all logs                 | |
-| `./dev-env <service> logs -f <service2>` | Logs for one component. \<service2\> can include backing services        | |
-| `./dev-env <service> exec <service2> sh` | Start shell inside container | Changes are not persisted on restarts! |
-| `./dev-env <service> stop`         | Stop everything (keep data)  | |
-| `./dev-env <service> down`         | Stop and **remove** data | **This will reset any non persisted data!** |
-| `./dev-env <service> pull`         | Pull latest images           | |
+| `./dev-env up <service>`        | Starts \<service\> and prints its logs in real-time               | |
+| `./dev-env up -d <service>`        | Starts \<service\>               | |
+| `./dev-env ps`           | Show running containers      | |
+| `./dev-env logs -f`      | See all logs                 | |
+| `./dev-env logs -f <service>` | Logs for one component. \<service\> can include backing services        | |
+| `./dev-env exec <service> sh` | Start shell inside container | Changes are not persisted on restarts! |
+| `./dev-env stop`         | Stop everything (keep data)  | |
+| `./dev-env down`         | Stop and **remove** data | **This will reset any non persisted data!** |
+| `./dev-env pull`         | Pull latest images           | |
 
 ## Auth
 
