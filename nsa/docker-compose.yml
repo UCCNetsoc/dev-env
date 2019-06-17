@@ -2,6 +2,7 @@ version: '3.7'
 services:
   nsa:
     image: docker.netsoc.co/public/netsocadmin:dev-env
+    stop_signal: SIGINT
     container_name: netsocadmin
     ports:
       - 5050:5050
