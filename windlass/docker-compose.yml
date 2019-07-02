@@ -12,3 +12,4 @@ services:
       - auth
       - consul
       - vault
+      - rabbit
