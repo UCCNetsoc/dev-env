@@ -38,10 +38,3 @@ services:
       - consul
     cap_add:
       - IPC_LOCK
-
-  rabbit:
-    image: rabbitmq:3-management
-    container_name: netsoc-rabbit
-    hostname: netsoc-rabbit
-    ports:
-      - 15672:15672

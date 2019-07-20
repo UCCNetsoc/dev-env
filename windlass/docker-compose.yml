@@ -3,8 +3,6 @@ services:
   windlass:
     image: docker.netsoc.co/public/windlass:dev-env
     container_name: windlass
-    volumes:
-      - /var/lib/lxd/unix.socket:/var/lib/lxd/unix.socket:ro
     ports:
       - 5051:8080
     depends_on:
@@ -12,4 +10,13 @@ services:
       - auth
       - consul
       - vault
-      - rabbit
+      - windlass-worker
+  windlass-worker:
+    image: docker.netsoc.co/public/windlass-worker:dev-env
+    container_name: windlass-worker
+    cap_add:
+      - NET_ADMIN
+    network_mode: host
+    depends_on:
+      - db
+      - consul
