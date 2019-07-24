@@ -1,0 +1,9 @@
+version: '3.7'
+services:
+  blog:
+    image: docker.netsoc.co/public/blog:dev-env
+    container_name: blog
+    ports:
+      - 1313:1313
+    depends_on:
+      - isso
