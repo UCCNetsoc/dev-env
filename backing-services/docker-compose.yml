@@ -46,3 +46,37 @@ services:
       - 8181:8080
     depends_on:
       - db
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.2.4
+    environment:
+      discovery.type: single-node
+    ports:
+      - 9200:9200
+      - 9300:9300   
+
+  grafana:
+    image: grafana/grafana:master
+    container_name: grafana
+    ports:
+      - "3000:3000"
+
+  fluentd:
+    image: strum355/fluentd:latest
+    container_name: fluentd
+    command: fluentd -c /data/fluentd.conf
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"    
+    depends_on:
+      - elasticsearch
+      - kibana
+    volumes:
+      - /home/noah/Netsoc/dev-env/backing-services/fluentd/data/fluentd.conf:/data/fluentd.conf
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:6.2.4
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    ports:
+      - 5601:5601      

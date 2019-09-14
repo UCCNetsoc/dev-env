@@ -6,6 +6,12 @@ services:
     container_name: netsocadmin
     ports:
       - 5050:5050
+    logging:
+      driver: "fluentd"
+      options:
+        fluentd-address: localhost:24224
+        tag: netsocadmin
     depends_on:
       - db
       - auth
+      - fluentd
