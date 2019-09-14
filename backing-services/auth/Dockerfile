@@ -1,4 +1,4 @@
-FROM osixia/openldap:latest
+FROM osixia/openldap:1.2.4
 
 ENV LDAP_ADMIN_PASSWORD=netsoc
 ENV LDAP_CONFIG_PASSWORD=netsoc
