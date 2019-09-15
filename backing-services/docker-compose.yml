@@ -49,21 +49,27 @@ services:
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.2.4
+    container_name: netsoc-elasticsearch
     environment:
       discovery.type: single-node
+    ulimits:
+      nofile:
+        soft: 122880
+        hard: 122880
     ports:
       - 9200:9200
       - 9300:9300   
 
   grafana:
     image: grafana/grafana:master
+    container_name: netsoc-grafana
     container_name: grafana
     ports:
       - "3000:3000"
 
   fluentd:
     image: strum355/fluentd:latest
-    container_name: fluentd
+    container_name: netsoc-fluentd
     command: fluentd -c /data/fluentd.conf
     ports:
       - "24224:24224"
@@ -76,6 +82,7 @@ services:
 
   kibana:
     image: docker.elastic.co/kibana/kibana:6.2.4
+    container_name: netsoc-kibana
     environment:
       ELASTICSEARCH_URL: http://elasticsearch:9200
     ports:
