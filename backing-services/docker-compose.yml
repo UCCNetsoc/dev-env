@@ -6,13 +6,16 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./data:/docker-entrypoint-initdb.d
+      - ../backing-services/mysql/data:/docker-entrypoint-initdb.d
 
   auth:
     image: docker.netsoc.co/public/ldap:dev-env
     container_name: netsoc-ldap
     ports:
       - 389:389
+    volumes: 
+      - ../backing-services/auth/data/config:/etc/ldap/slapd.d
+      - ../backing-services/auth/data/database:/var/lib/ldap
 
   consul:
     image: consul:1.6.1
