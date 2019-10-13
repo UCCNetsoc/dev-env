@@ -13,9 +13,9 @@ services:
     container_name: netsoc-ldap
     ports:
       - 389:389
-    volumes: 
-      - ../backing-services/auth/data/config:/etc/ldap/slapd.d
-      - ../backing-services/auth/data/database:/var/lib/ldap
+    #volumes: 
+    #  - ../backing-services/auth/data/config:/etc/ldap/slapd.d
+    #  - ../backing-services/auth/data/database:/var/lib/ldap
 
   consul:
     image: consul:1.6.1
