@@ -9,5 +9,6 @@ services:
       - consul
     volumes:
       - /var/run/fail2ban:/var/run/fail2ban
+      - /var/lib/fail2ban:/var/lib/fail2ban
     environment:
       - CONSUL_HOST=netsoc-consul:8500
