@@ -2,7 +2,6 @@ version: '3.7'
 services:
   netsocbot:
     image: docker.netsoc.co/public/netsocbot:dev-env
-    stop_signal: SIGINT
     container_name: netsocbot
     environment:
       - NETSOCBOT_TOKEN
