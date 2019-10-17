@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  netsocbot:
+    image: docker.netsoc.co/public/netsocbot:dev-env
+    container_name: netsocbot
+    environment:
+      - NETSOCBOT_TOKEN
+      - NETSOCBOT_PREFIX
+      - NETSOCBOT_SENDGRID_TOKEN
+      - NETSOCBOT_ROLEIDS
