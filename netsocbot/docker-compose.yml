@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   netsocbot:
-    image: docker.netsoc.co/public/netsocbot:dev-env
+    image: docker.netsoc.co/public/netsocbot:latest
     container_name: netsocbot
     environment:
       - NETSOCBOT_TOKEN
