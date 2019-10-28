@@ -11,6 +11,7 @@ services:
       - consul
       - vault
       - windlass-worker
+
   windlass-worker:
     image: docker.netsoc.co/public/windlass-worker:dev-env
     container_name: windlass-worker
@@ -20,3 +21,4 @@ services:
     depends_on:
       - db
       - consul
+      - vault
