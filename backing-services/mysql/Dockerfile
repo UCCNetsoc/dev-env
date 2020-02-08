@@ -1,4 +1,4 @@
-FROM mysql:5.7.20
+FROM mysql:8.0.18
 
 ENV MYSQL_USER=netsoc
 ENV MYSQL_PASSWORD=netsoc
