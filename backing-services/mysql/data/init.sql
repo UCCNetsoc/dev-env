@@ -1,4 +1,4 @@
-CREATE TABLE `users` IF NOT EXISTS (
+CREATE TABLE IF NOT EXISTS `users` (
     `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
     `uid` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
     `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -12,19 +12,19 @@ CREATE TABLE `users` IF NOT EXISTS (
 CREATE USER IF NOT EXISTS 'john'@'%' IDENTIFIED BY 'johns-password';
 CREATE USER IF NOT EXISTS 'sofia'@'%' IDENTIFIED BY 'sofias-password';
 
-INSERT INTO users (`uid`, `name`, `email`) VALUES ('john', 'John Jordan', '112233445@umail.ucc.ie') ON DUPLICATE KEY UPDATE;
-INSERT INTO users (`uid`, `name`, `email`) VALUES ('sofia', 'Sofia Bosak', '544332211@umail.ucc.ie') ON DUPLICATE KEY UPDATE;
+INSERT IGNORE INTO users (`uid`, `name`, `email`) VALUES ('john', 'John Jordan', '112233445@umail.ucc.ie');
+INSERT IGNORE INTO users (`uid`, `name`, `email`) VALUES ('sofia', 'Sofia Bosak', '544332211@umail.ucc.ie');
 
 GRANT
     SELECT, INSERT, UPDATE, DELETE,
     CREATE, DROP, REFERENCES, INDEX,
-    ALTER, EXECUTE, CREATE ROUTINE, ALTER ROUTINE 
+    ALTER, EXECUTE, CREATE ROUTINE, ALTER ROUTINE
 ON
     *.* TO 'john'@'%';
 
 GRANT
     SELECT, INSERT, UPDATE, DELETE,
     CREATE, DROP, REFERENCES, INDEX,
-    ALTER, EXECUTE, CREATE ROUTINE, ALTER ROUTINE 
+    ALTER, EXECUTE, CREATE ROUTINE, ALTER ROUTINE
 ON
     `sofia\_%`.* TO 'sofia'@'%';
