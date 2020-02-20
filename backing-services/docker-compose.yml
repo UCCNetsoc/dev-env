@@ -22,6 +22,11 @@ services:
       - 8500:8500
       - 8600:53/udp
       - 8400:8400
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.consul.rule=Host(`consul.netsoc.localhost`)"
+      - "traefik.http.services.consul-service.loadbalancer.server.port=8500"
+      - "traefik.http.routers.consul.service=consul-service"
 
   vault:
     image: docker.netsoc.co/public/vault:dev-env
@@ -38,6 +43,11 @@ services:
       - consul
     cap_add:
       - IPC_LOCK
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.vault.rule=Host(`vault.netsoc.localhost`)"
+      - "traefik.http.services.vault-service.loadbalancer.server.port=8200"
+      - "traefik.http.routers.vault.service=vault-service"
 
   isso:
     image: docker.netsoc.co/public/isso:dev-env
@@ -46,3 +56,16 @@ services:
       - 8181:8080
     depends_on:
       - db
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.isso.rule=Host(`isso.netsoc.localhost`)"
+      - "traefik.http.services.isso-service.loadbalancer.server.port=8080"
+      - "traefik.http.routers.isso.service=isso-service"
+
+  traefik:
+    image: traefik:2.1.2
+    container_name: netsoc-traefik
+    network_mode: host
+    volumes:
+      - ./traefik/conf.toml:/etc/traefik/traefik.toml
+      - /var/run/docker.sock:/var/run/docker.sock:ro

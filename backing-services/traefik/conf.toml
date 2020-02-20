@@ -1,3 +1,10 @@
 [api]
   insecure = true
   dashboard = true
+
+[entrypoints]
+  [entrypoints.web]
+    address = ":80"
+
+[providers.docker]
+  exposedByDefault = false

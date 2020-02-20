@@ -11,6 +11,12 @@ services:
       - consul
       - vault
       - windlass-worker
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.windlass.rule=Host(`windlass.netsoc.localhost`)"
+      - "traefik.http.services.windlass-service.loadbalancer.server.port=8080"
+      - "traefik.http.routers.windlass.service=windlass-service"
 
   windlass-worker:
     image: docker.netsoc.co/public/windlass-worker:dev-env
@@ -22,3 +28,9 @@ services:
       - db
       - consul
       - vault
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.windlass-worker.rule=Host(`windlass-worker.netsoc.localhost`)"
+      - "traefik.http.services.windlass-worker-service.loadbalancer.server.port=9786"
+      - "traefik.http.routers.windlass-worker.service=windlass-worker-service"
