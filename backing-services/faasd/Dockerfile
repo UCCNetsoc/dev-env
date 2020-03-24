@@ -40,5 +40,5 @@ ADD https://raw.githubusercontent.com/AkihiroSuda/containerized-systemd/b9f98826
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 # Install 2ndboot
-ADD docker-2ndboot.sh /
+ADD data/docker-2ndboot.sh /
 CMD ["/docker-2ndboot.sh"]
