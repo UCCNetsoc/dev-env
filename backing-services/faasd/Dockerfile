@@ -1,7 +1,9 @@
 # Sourced from https://github.com/openfaas/faasd/pull/43/
 FROM golang:1.13-buster AS faasd
+ARG FAASD_VERSION=0.8.1
 
-ADD . /go/src/github.com/openfaas/faasd
+RUN mkdir -p /go/src/github.com/openfaas/faasd
+RUN git clone -b ${FAASD_VERSION} --single-branch --depth 1 https://github.com/openfaas/faasd.git  /go/src/github.com/openfaas/faasd
 WORKDIR  /go/src/github.com/openfaas/faasd
 RUN make
 

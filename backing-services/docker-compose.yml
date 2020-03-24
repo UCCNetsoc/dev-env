@@ -51,4 +51,4 @@ services:
     image: docker.netsoc.co/public/faasd:dev-env
     container_name: faasd
     ports:
-      - 8080:8080
+      - 8380:8080
