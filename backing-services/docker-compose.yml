@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 services:
   db:
     image: docker.netsoc.co/public/mysql:dev-env
@@ -46,3 +46,9 @@ services:
       - 8181:8080
     depends_on:
       - db
+
+  faasd:
+    image: docker.netsoc.co/public/faasd:dev-env
+    container_name: faasd
+    ports:
+      - 8080:8080
