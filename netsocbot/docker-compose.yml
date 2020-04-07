@@ -1,9 +1,10 @@
-version: "3.7"
+version: '3.7'
 services:
   netsocbot:
-    image: docker.netsoc.co/public/discord-bot:latest
-    container_name: discordbot
+    image: docker.netsoc.co/public/netsocbot:latest
+    container_name: netsocbot
     environment:
-      - DISCORD_TOKEN
-    volumes:
-      - /bot
+      - NETSOCBOT_TOKEN
+      - NETSOCBOT_PREFIX
+      - NETSOCBOT_SENDGRID_TOKEN
+      - NETSOCBOT_ROLEIDS
