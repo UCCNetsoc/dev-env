@@ -55,4 +55,4 @@ services:
     tty: true
     privileged: true # For tmpfs
     environment:
-      basic_auth: false # Removes authentication from /ui and /system
+      basic_auth: "false" # Removes authentication from /ui and /system
