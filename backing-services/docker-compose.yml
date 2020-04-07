@@ -52,3 +52,5 @@ services:
     container_name: faasd
     ports:
       - 8282:8080
+    tty: true
+    privileged: true
