@@ -1,6 +1,6 @@
 version: "3.7"
 services:
-  netsocbot:
+  discord-bot:
     image: docker.netsoc.co/public/discord-bot:dev-env
     container_name: discordbot
     environment:
