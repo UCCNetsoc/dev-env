@@ -8,3 +8,5 @@ services:
     volumes:
       - /bot
     command: modd # Hot reloading
+    depends_on:
+      - consul
