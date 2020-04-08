@@ -3,8 +3,9 @@ services:
   discord-bot:
     image: docker.netsoc.co/public/discord-bot:dev-env
     container_name: discordbot
-    environment:
-      - DISCORD_TOKEN
+    ## Vars to put in override:
+    # environment:
+    #   - DISCORD_TOKEN
     volumes:
       - /bot
     command: modd # Hot reloading
