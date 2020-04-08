@@ -9,5 +9,6 @@ services:
     ## Vars to put in override:
     environment:
       - DISCORD_TOKEN=insert
+      - CONSUL_ADDRESS=172.17.0.1:8500
     volumes:
       - /bot
