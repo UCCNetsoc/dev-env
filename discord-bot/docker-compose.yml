@@ -6,6 +6,8 @@ services:
     command: modd # Hot reloading
     depends_on:
       - consul
+    ports:
+      - 8888:80
     ## Vars to put in override:
     environment:
       - DISCORD_TOKEN=insert
