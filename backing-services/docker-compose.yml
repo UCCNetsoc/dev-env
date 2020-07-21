@@ -1,13 +1,13 @@
-version: '3.7'
+version: "3.7"
 services:
   db:
-    image: docker.netsoc.co/public/mysql:dev-env
+    image: uccnetsoc/mysql:dev-env
     container_name: netsoc-mysql
     ports:
       - 3306:3306
 
   auth:
-    image: docker.netsoc.co/public/ldap:dev-env
+    image: uccnetsoc/ldap:dev-env
     container_name: netsoc-ldap
     ports:
       - 389:389
@@ -24,7 +24,7 @@ services:
       - 8400:8400
 
   vault:
-    image: docker.netsoc.co/public/vault:dev-env
+    image: uccnetsoc/vault:dev-env
     container_name: netsoc-vault
     environment:
       VAULT_ADDR: http://0.0.0.0:8200
@@ -40,7 +40,7 @@ services:
       - IPC_LOCK
 
   isso:
-    image: docker.netsoc.co/public/isso:dev-env
+    image: uccnetsoc/isso:dev-env
     container_name: isso
     ports:
       - 8181:8080

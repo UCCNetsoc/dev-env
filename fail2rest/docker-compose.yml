@@ -1,9 +1,9 @@
-version: '3.7'
+version: "3.7"
 services:
   fail2rest:
-    image: docker.netsoc.co/public/fail2rest:dev-env
+    image: uccnetsoc/fail2rest:dev-env
     container_name: fail2rest
-    ports: 
+    ports:
       - 8080:8080
     depends_on:
       - consul
