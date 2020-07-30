@@ -6,6 +6,7 @@ services:
     command: modd # Hot reloading
     depends_on:
       - consul
+      - prometheus
     ports:
       - 8888:80
     ## Vars to put in override:
