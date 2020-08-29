@@ -7,6 +7,7 @@ services:
     depends_on:
       - consul
       - prometheus
+      - db
     ports:
       - 8888:80
     ## Vars to put in override:
