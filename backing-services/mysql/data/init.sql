@@ -28,3 +28,5 @@ GRANT
     ALTER, EXECUTE, CREATE ROUTINE, ALTER ROUTINE
 ON
     `sofia\_%`.* TO 'sofia'@'%';
+
+
