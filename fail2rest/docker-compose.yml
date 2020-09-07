@@ -1,12 +1,11 @@
 version: "3.7"
 services:
-  fail2rest:
+  fail2rest.netsoc.local:
     image: uccnetsoc/fail2rest:dev-env
-    container_name: fail2rest
     ports:
       - 8080:8080
     depends_on:
-      - consul
+      - consul.netsoc.local
     volumes:
       - /var/run/fail2ban:/var/run/fail2ban
       - /var/lib/fail2ban:/var/lib/fail2ban

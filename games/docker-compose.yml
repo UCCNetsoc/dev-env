@@ -1,22 +1,22 @@
 version: "3.7"
 services:
-  games:
+  games.netsoc.local:
     image: uccnetsoc/games-panel:dev-env
     ports:
       - 8888:80
       - 8443:443
     depends_on:
-      - db
-    container_name: games
+      - mysql.netsoc.local
+      - proxy.netsoc.local
     environment:
       - APP_ENV=development
       - APP_THEME=netsoc
-      - DB_HOST=netsoc-mysql
+      - DB_HOST=mysql.netsoc.local
       - DB_PASSWORD=password
     volumes:
       - /app/resources/styles
       - /app/var
-  db:
+  mysql.netsoc.local:
     volumes:
       - ../games/data:/docker-entrypoint-initdb.d
     environment:

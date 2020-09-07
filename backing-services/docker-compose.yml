@@ -1,20 +1,17 @@
 version: "3.7"
 services:
-  db:
+  mysql.netsoc.local:
     image: uccnetsoc/mysql:dev-env
-    container_name: netsoc-mysql
     ports:
       - 3306:3306
 
-  auth:
+  auth.netsoc.local:
     image: uccnetsoc/ldap:dev-env
-    container_name: netsoc-ldap
     ports:
       - 389:389
 
-  consul:
+  consul.netsoc.local:
     image: consul:1.6.1
-    container_name: netsoc-consul
     command: agent -server -bootstrap-expect 1 -ui -client 0.0.0.0
     environment:
       CONSUL_BIND_INTERFACE: eth0
@@ -23,9 +20,8 @@ services:
       - 8600:53/udp
       - 8400:8400
 
-  vault:
+  vault.netsoc.local:
     image: uccnetsoc/vault:dev-env
-    container_name: netsoc-vault
     environment:
       VAULT_ADDR: http://0.0.0.0:8200
       VAULT_DEV_LISTEN_ADDRESS: 0.0.0.0:8200
@@ -34,15 +30,22 @@ services:
     ports:
       - 8200:8200
     depends_on:
-      - auth
-      - consul
+      - auth.netsoc.local
+      - consul.netsoc.local
     cap_add:
       - IPC_LOCK
 
-  isso:
+  isso.netsoc.local:
     image: uccnetsoc/isso:dev-env
-    container_name: isso
     ports:
       - 8181:8080
     depends_on:
-      - db
+      - mysql.netsoc.local
+
+  proxy.netsoc.local:
+    image: wernight/dante
+    ports:
+      - "0.0.0.0:1080:1080"
+
+  whoami.netsoc.local:
+    image: containous/whoami

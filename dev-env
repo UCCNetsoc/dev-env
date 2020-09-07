@@ -1,3 +1,14 @@
 #!/bin/bash
 
-docker-compose -f ./backing-services/docker-compose.yml $(find . -name 'docker-compose.*yml' -print0 | sort -rz | xargs -r0 -n 1 echo '-f' | grep -v 'backing-services' | xargs echo) ${@:1}
+if [[ $1 == "up" ]]; then
+    ARGS="up"
+    for (( i=2; i <= "$#"; i++ )); do
+        if [[ ${!i} != "-"* ]];then
+            ARGS="$ARGS ${!i}.netsoc.local"
+        fi
+    done
+else
+    ARGS=${@:1}
+fi
+
+docker-compose -f ./backing-services/docker-compose.yml $(find . -name 'docker-compose.*yml' -print0 | sort -rz | xargs -r0 -n 1 echo '-f' | grep -v 'backing-services' | xargs echo) $ARGS

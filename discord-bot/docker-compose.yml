@@ -1,11 +1,10 @@
 version: "3.7"
 services:
-  discord-bot:
+  discord-bot.netsoc.local:
     image: uccnetsoc/discord-bot:dev-env
-    container_name: discordbot
     command: modd # Hot reloading
     depends_on:
-      - consul
+      - consul.netsoc.local
     ports:
       - 8888:80
     ## Vars to put in override:
@@ -15,6 +14,6 @@ services:
       - TWITTER_SECRET=insert
       - TWITTER_ACCESS_KEY=insert
       - TWITTER_ACCESS_SECRET=insert
-      - CONSUL_ADDRESS=consul:8500
+      - CONSUL_ADDRESS=consul.netsoc.local:8500
     volumes:
       - /bot
