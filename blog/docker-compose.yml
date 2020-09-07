@@ -1,8 +1,9 @@
 version: "3.7"
 services:
-  blog.netsoc.local:
+  blog:
     image: uccnetsoc/blog:dev-env
+    container_name: blog.netsoc.local
     ports:
       - 1313:1313
     depends_on:
-      - isso.netsoc.local
+      - isso

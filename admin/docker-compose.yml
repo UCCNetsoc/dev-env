@@ -1,0 +1,36 @@
+version: "3.7"
+services:
+  admin:
+    container_name: admin.netsoc.local
+    build:
+      context: "./ui"
+      target: dev
+    command: npm run serve
+    volumes:
+      - "./ui/:/app"
+    environment:
+      VUE_APP_NETSOC_API_URL: "http://api.netsoc.local"
+    depends_on:
+      - api
+      - proxy
+      - unitproxy
+      - unit
+      - ipa
+      - ipaclient
+      - keycloak
+      - mysql
+
+  api:
+    container_name: api.netsoc.local
+    restart: always
+    image: tiangolo/uvicorn-gunicorn-fastapi:python3.8
+    volumes:
+      - "./api/v1:/app/v1/"
+      - "./api/requirements.txt:/requirements.txt"
+      - "./api/prestart.sh:/app/prestart.sh"
+      - "./config.sample.yml:/config.yml"
+      - "./home/users/:/home/users:Z"
+    command: /start-reload.sh --host 0.0.0.0 --port 8080
+    environment:
+      MODULE_NAME: "v1.main"
+      VARIABLE_NAME: "api"

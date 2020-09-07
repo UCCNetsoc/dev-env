@@ -1,22 +1,22 @@
 version: "3.7"
 services:
-  windlass.netsoc.local:
+  windlass:
     image: uccnetsoc/windlass:dev-env
     ports:
       - 5051:8080
     depends_on:
-      - mysql.netsoc.local
-      - auth.netsoc.local
-      - consul.netsoc.local
-      - vault.netsoc.local
-      - windlass-worker.netsoc.local
+      - mysql
+      - auth
+      - consul
+      - vault
+      - windlass-worker
 
-  windlass-worker.netsoc.local:
+  windlass-worker:
     image: uccnetsoc/windlass-worker:dev-env
     cap_add:
       - NET_ADMIN
     network_mode: host
     depends_on:
-      - mysql.netsoc.local
-      - consul.netsoc.local
-      - vault.netsoc.local
+      - mysql
+      - consul
+      - vault
