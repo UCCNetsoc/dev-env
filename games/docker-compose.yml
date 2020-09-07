@@ -17,6 +17,7 @@ services:
     volumes:
       - /app/resources/styles
       - /app/var
+
   mysql:
     volumes:
       - ../games/data:/docker-entrypoint-initdb.d

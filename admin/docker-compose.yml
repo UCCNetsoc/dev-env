@@ -2,12 +2,10 @@ version: "3.7"
 services:
   admin:
     container_name: admin.netsoc.local
-    build:
-      context: "./ui"
-      target: dev
+    image: uccnetsoc/admin:dev-env
     command: npm run serve
     volumes:
-      - "./ui/:/app"
+      - /app
     environment:
       VUE_APP_NETSOC_API_URL: "http://api.netsoc.local"
     depends_on:
@@ -23,7 +21,7 @@ services:
   api:
     container_name: api.netsoc.local
     restart: always
-    image: tiangolo/uvicorn-gunicorn-fastapi:python3.8
+    image: tiangolo/uvicorn-gunicorn-fastapi:python3.8 # TODO: Fix for docker image
     volumes:
       - "./api/v1:/app/v1/"
       - "./api/requirements.txt:/requirements.txt"
