@@ -6,6 +6,12 @@ services:
     command: modd # Hot reloading
     depends_on:
       - consul
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.discord-bot.rule=Host(`events.netsoc.local`)"
+      - "traefik.http.services.discord-bot-service.loadbalancer.server.port=80"
+      - "traefik.http.routers.discord-bot.service=discord-bot-service"
     ports:
       - 8888:80
     ## Vars to put in override:

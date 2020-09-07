@@ -24,7 +24,7 @@ services:
       - 8400:8400
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.consul.rule=Host(`consul.netsoc.localhost`)"
+      - "traefik.http.routers.consul.rule=Host(`consul.netsoc.local`)"
       - "traefik.http.services.consul-service.loadbalancer.server.port=8500"
       - "traefik.http.routers.consul.service=consul-service"
 
@@ -45,7 +45,7 @@ services:
       - IPC_LOCK
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.vault.rule=Host(`vault.netsoc.localhost`)"
+      - "traefik.http.routers.vault.rule=Host(`vault.netsoc.local`)"
       - "traefik.http.services.vault-service.loadbalancer.server.port=8200"
       - "traefik.http.routers.vault.service=vault-service"
 
@@ -58,7 +58,7 @@ services:
       - db
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.isso.rule=Host(`isso.netsoc.localhost`)"
+      - "traefik.http.routers.isso.rule=Host(`isso.netsoc.local`)"
       - "traefik.http.services.isso-service.loadbalancer.server.port=8080"
       - "traefik.http.routers.isso.service=isso-service"
 

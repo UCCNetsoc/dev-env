@@ -12,6 +12,6 @@ services:
       - traefik
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.nsa.rule=Host(`nsa.netsoc.localhost`)"
+      - "traefik.http.routers.nsa.rule=Host(`nsa.netsoc.local`)"
       - "traefik.http.services.nsa-service.loadbalancer.server.port=5050"
       - "traefik.http.routers.nsa.service=nsa-service"

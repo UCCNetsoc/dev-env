@@ -10,6 +10,6 @@ services:
       - traefik
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.nsa.rule=Host(`blog.netsoc.localhost`)"
+      - "traefik.http.routers.nsa.rule=Host(`blog.netsoc.local`)"
       - "traefik.http.services.blog-service.loadbalancer.server.port=1313"
       - "traefik.http.routers.blog.service=blog-service"

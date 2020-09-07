@@ -15,6 +15,6 @@ services:
       - CONSUL_HOST=netsoc-consul:8500
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.fail2rest.rule=Host(`fail2rest.netsoc.localhost`)"
+      - "traefik.http.routers.fail2rest.rule=Host(`fail2rest.netsoc.local`)"
       - "traefik.http.services.fail2rest-service.loadbalancer.server.port=8080"
       - "traefik.http.routers.fail2rest.service=fail2rest-service"
