@@ -1,7 +1,7 @@
-version: '3.7'
+version: "3.7"
 services:
   nsa:
-    image: docker.netsoc.co/public/netsocadmin:dev-env
+    image: uccnetsoc/netsocadmin2:dev-env
     stop_signal: SIGINT
     container_name: netsocadmin
     ports:
