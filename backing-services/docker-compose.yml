@@ -86,6 +86,7 @@ services:
     image: nginx/unit:1.19.0-full
     volumes:
       - "unitsock:/var/run/:z"
+      - "home:/home/users/:z"
 
   ipa:
     container_name: ipa.netsoc.local
@@ -145,4 +146,5 @@ services:
       - "/etc/localtime:/etc/localtime:ro"
 
 volumes:
+  home:
   unitsock:
