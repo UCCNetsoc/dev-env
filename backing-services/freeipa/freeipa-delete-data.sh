@@ -1,3 +1,3 @@
 #!/bin/bash
-sudo rm ./data -r
-sudo rm ./home -r
+sudo rm ./data -rf
+sudo rm ./home -rf
