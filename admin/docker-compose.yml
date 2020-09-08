@@ -33,4 +33,10 @@ services:
 
   unit:
     volumes:
-      - /home/users/:z
+
+volumes:
+  home:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
