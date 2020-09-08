@@ -25,18 +25,8 @@ services:
     volumes:
       - /app
       - /config.yml
-      - /home/users:z
+      - ../backing-services/freeipa/home/users:/home/users:z
     command: /start-reload.sh --host 0.0.0.0 --port 8080
     environment:
       MODULE_NAME: "v1.main"
       VARIABLE_NAME: "api"
-
-  unit:
-    volumes:
-
-volumes:
-  home:
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
