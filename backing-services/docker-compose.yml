@@ -127,7 +127,7 @@ services:
       PASSWORD: netsoc_freeipa
       IPA_CLIENT_INSTALL_OPTS: --server=ipa.netsoc.local --domain=netsoc.local --force-join
     volumes:
-      - "./home/:/home/:Z"
+      - "home/:/home/:Z"
 
   keycloak:
     container_name: keycloak.netsoc.local
