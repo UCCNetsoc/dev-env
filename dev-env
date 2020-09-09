@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker-compose -f ./backing-services/docker-compose.yml $(find . -name 'docker-compose.*yml' -print0 | sort -rz | xargs -r0 -n 1 echo '-f' | grep -v 'backing-services' | xargs echo) ${@:1}
+docker-compose -f ./backing-services/docker-compose.yml $(find . -path ./backing-services/freeipa -prune -false -o -name 'docker-compose.*yml' -print0 | sort -rz | xargs -r0 -n 1 echo '-f' | grep -v 'backing-services' | xargs echo) ${@:1}
