@@ -21,9 +21,10 @@ services:
   api:
     container_name: api.netsoc.local
     restart: always
-    image: uccnetsoc/api:dev-env
+    image: uccnetsoc/admin_api:dev-env
     volumes:
       - /app
+      - /requirements.txt
       - /config.yml
       - ../backing-services/freeipa/home/users:/home/users:z
     command: /start-reload.sh --host 0.0.0.0 --port 8080

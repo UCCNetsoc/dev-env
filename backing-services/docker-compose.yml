@@ -100,6 +100,7 @@ services:
       --no-host-dns
     hostname: ipa.netsoc.local
     read_only: true
+    user: root
     environment:
       IPA_SERVER_HOSTNAME: ipa.netsoc.local
     tmpfs:
