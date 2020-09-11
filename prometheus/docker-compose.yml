@@ -1,6 +1,7 @@
 version: "3.7"
 services:
   prometheus:
+    container_name: prometheus.netsoc.local
     image: prom/prometheus
     container_name: prometheus
     ports:
