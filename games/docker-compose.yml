@@ -7,7 +7,7 @@ services:
       - 8888:80
       - 8443:443
     depends_on:
-      - mysql
+      - mysql_games
       - proxy
     environment:
       - APP_ENV=development
@@ -17,12 +17,3 @@ services:
     volumes:
       - /app/resources/styles
       - /app/var
-
-  mysql:
-    volumes:
-      - ../games/data:/docker-entrypoint-initdb.d
-    environment:
-      - MYSQL_USER=pterodactyl
-      - MYSQL_PASSWORD=password
-      - MYSQL_DATABASE=panel
-      - MYSQL_ROOT_PASSWORD=password
