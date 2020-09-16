@@ -3,7 +3,7 @@ services:
   admin:
     container_name: admin.netsoc.local
     image: uccnetsoc/admin:dev-env
-    command: npm run serve
+    command: npm run serve -- --port 80
     volumes:
       - /app
     environment:
