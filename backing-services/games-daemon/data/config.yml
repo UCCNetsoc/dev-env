@@ -1,0 +1,66 @@
+debug: false
+uuid: 91f74c01-b895-4ce0-8cab-e9468233c010
+token_id: IpZgBO4N9rr1L2rp
+token: lyIBX1KUQWOYVcS87YVtBpr41L5fB8GOpQSwB9E1BptJgeRyg4nvqxwGsjX51Lsi
+api:
+  host: 0.0.0.0
+  port: 8080
+  ssl:
+    enabled: false
+    cert: /etc/letsencrypt/live/games-daemon.netsoc.local/fullchain.pem
+    key: /etc/letsencrypt/live/games-daemon.netsoc.local/privkey.pem
+  upload_limit: 100
+system:
+  root_directory: /var/lib/pterodactyl
+  log_directory: /var/log/pterodactyl
+  data: /srv/daemon-data
+  archive_directory: /srv/daemon-data/.archives
+  backup_directory: /var/lib/pterodactyl/backups
+  username: pterodactyl
+  user:
+    uid: 100
+    gid: 101
+  disk_check_interval: 150
+  detect_clean_exit_as_crash: false
+  check_permissions_on_boot: true
+  enable_log_rotate: true
+  sftp:
+    disable_disk_checking: false
+    bind_address: 0.0.0.0
+    bind_port: 2022
+    read_only: false
+docker:
+  network:
+    interface: 172.18.0.1
+    dns:
+    - 1.1.1.1
+    - 1.0.0.1
+    name: pterodactyl_nw
+    ispn: false
+    driver: bridge
+    network_mode: pterodactyl_nw
+    is_internal: false
+    enable_icc: true
+    interfaces:
+      v4:
+        subnet: 172.18.0.0/16
+        gateway: 172.18.0.1
+      v6:
+        subnet: fdba:17c8:6c94::/64
+        gateway: fdba:17c8:6c94::1011
+  domainname: ""
+  update_images: true
+  socket: /var/run/docker.sock
+  timezone_path: /etc/timezone
+  registries: {}
+  tmpfs_size: 100
+disk_check_timeout: 30
+throttles:
+  enabled: true
+  kill_at_count: 5
+  decay: 10
+  lines: 1000
+  check_interval: 100
+remote: http://games.netsoc.local
+allowed_mounts: []
+allowed_origins: []
