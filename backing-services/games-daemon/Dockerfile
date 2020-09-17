@@ -1,6 +1,7 @@
 FROM golang:1.14-alpine
 
 ENV REPO=https://github.com/pterodactyl/wings.git
+RUN apk add git
 RUN git clone --depth=1 ${REPO} /go/wings
 
 WORKDIR /go/wings/
