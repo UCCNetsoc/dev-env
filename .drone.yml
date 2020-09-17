@@ -78,7 +78,7 @@ steps:
       branch:
         - master
 
-  - name: build_vault
+  - name: build_games_daemon
     image: plugins/docker
     volumes:
       - name: cache
@@ -87,9 +87,9 @@ steps:
       tags:
         - "${DRONE_COMMIT_SHA:0:7}_dev-env"
         - dev-env
-      context: backing-services/vault
-      dockerfile: backing-services/vault/Dockerfile
-      repo: uccnetsoc/vault
+      context: backing-services/games-daemon
+      dockerfile: backing-services/games-daemon/Dockerfile
+      repo: uccnetsoc/games-daemon
       registry: docker.io
       custom_dns: [1.1.1.1]
       username:
