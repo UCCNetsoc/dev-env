@@ -146,5 +146,23 @@ services:
       - "./keycloak/krb5.keytab:/krb5.keytab"
       - "/etc/localtime:/etc/localtime:ro"
 
+  games-daemon:
+    container_name: games-daemon.netsoc.local
+    image: uccnetsoc/games-daemon:dev-env
+    hostname: games-daemon.netsoc.local
+    restart: always
+    working_dir: /go/wings
+    privileged: true
+    volumes:
+      - /var/lib/docker:/var/lib/docker
+      - ./games-daemon/data/config.yml:/config.yml
+      - ./games-daemon/data/logrotate.tpl:/go/wings/templates/logrotate.tpl
+      - /var/run/docker.sock:/var/run/docker.sock
+      - "/var/lib/pterodactyl/:/var/lib/pterodactyl/"
+      - "/srv/daemon-data/:/srv/daemon-data/"
+      - "/tmp/pterodactyl/:/tmp/pterodactyl/"
+      - "/etc/timezone:/etc/timezone:ro"
+    command: sh -c "sleep 30 && wings --config /config.yml --debug"
+
 volumes:
   unitsock:

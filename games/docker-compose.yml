@@ -3,12 +3,15 @@ services:
   games:
     container_name: games.netsoc.local
     image: uccnetsoc/games-panel:dev-env
+    # entrypoint: sh -c "/bin/ash scripts/entrypoint-dev.sh"
     ports:
       - 8888:80
       - 8443:443
     depends_on:
       - mysql
+      - games-daemon
       - proxy
+      - keycloak
     environment:
       - APP_ENV=development
       - APP_THEME=netsoc
