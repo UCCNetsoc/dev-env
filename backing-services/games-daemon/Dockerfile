@@ -1,5 +1,8 @@
 FROM golang:1.14-alpine
-COPY . /go/wings/
+
+ENV REPO=https://github.com/pterodactyl/wings.git
+RUN git clone --depth=1 ${REPO} /go/wings
+
 WORKDIR /go/wings/
 RUN apk add --no-cache upx \
     && go build -ldflags="-s -w" \
