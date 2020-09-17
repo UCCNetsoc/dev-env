@@ -5,9 +5,7 @@ RUN apk add git
 RUN git clone --depth=1 ${REPO} /go/wings
 
 WORKDIR /go/wings/
-RUN apk add --no-cache upx \
-    && go build -ldflags="-s -w" \
-    && upx --brute wings
+RUN go build -ldflags="-s -w" 
 
 FROM alpine:latest
 COPY --from=0 /go/wings/wings /usr/bin/
