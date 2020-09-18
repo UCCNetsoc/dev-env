@@ -9,7 +9,8 @@ services:
       - 8443:443
     depends_on:
       - mysql
-      - games-daemon
+      # - games-daemon
+      - phpmyadmin
       - proxy
       - keycloak
     environment:
@@ -18,5 +19,7 @@ services:
       - DB_HOST=mysql.netsoc.local
       - DB_PASSWORD=password
     volumes:
-      - /app/resources/styles
+      - /app/tailwind.js
+      - /app/tailwind.config.js
+      - /app/resources/scripts
       - /app/var

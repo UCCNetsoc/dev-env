@@ -1,7 +1,7 @@
 debug: false
-uuid: 91f74c01-b895-4ce0-8cab-e9468233c010
-token_id: IpZgBO4N9rr1L2rp
-token: lyIBX1KUQWOYVcS87YVtBpr41L5fB8GOpQSwB9E1BptJgeRyg4nvqxwGsjX51Lsi
+uuid: 2619c456-1526-4c58-95a1-66fe3bc75af7
+token_id: F99ENnPSLTlVdKvD
+token: WsYot5KJ3iuP6iRDkc1XP2H5XaF6b8RZTCbYSDCSbXu2Nus2ELNrU6lIhw39m3SP
 api:
   host: 0.0.0.0
   port: 8080
@@ -13,15 +13,15 @@ api:
 system:
   root_directory: /var/lib/pterodactyl
   log_directory: /var/log/pterodactyl
-  data: /srv/daemon-data
-  archive_directory: /srv/daemon-data/.archives
+  data: /var/lib/pterodactyl/volumes
+  archive_directory: /var/lib/pterodactyl/archives
   backup_directory: /var/lib/pterodactyl/backups
   username: pterodactyl
   user:
     uid: 100
     gid: 101
   disk_check_interval: 150
-  detect_clean_exit_as_crash: false
+  detect_clean_exit_as_crash: true
   check_permissions_on_boot: true
   enable_log_rotate: true
   sftp:
@@ -54,11 +54,11 @@ docker:
   timezone_path: /etc/timezone
   registries: {}
   tmpfs_size: 100
-disk_check_timeout: 30
+disk_check_timeout: 0
 throttles:
   enabled: true
   kill_at_count: 5
-  decay: 10
+  decay: 10000
   lines: 1000
   check_interval: 100
 remote: http://games.netsoc.local

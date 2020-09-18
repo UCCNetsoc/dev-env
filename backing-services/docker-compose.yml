@@ -164,5 +164,16 @@ services:
       - "/etc/timezone:/etc/timezone:ro"
     command: sh -c "sleep 30 && wings --config /config.yml --debug"
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin.netsoc.local
+    environment:
+      - PMA_ARBITRARY=1
+    restart: always
+    ports:
+      - 8080:80
+    volumes:
+      - /sessions
+
 volumes:
   unitsock:
