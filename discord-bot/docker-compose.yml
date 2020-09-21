@@ -5,7 +5,7 @@ services:
     image: uccnetsoc/discord-bot:dev-env
     command: modd # Hot reloading
     depends_on:
-      - consul
+      - mysql
     ports:
       - 8888:80
     ## Vars to put in override:
