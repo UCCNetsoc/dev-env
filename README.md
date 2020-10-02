@@ -1,4 +1,4 @@
-# UCC Netsoc Developer Environment
+<img src="https://github.com/UCCNetsoc/wiki/raw/master/assets/logo-service-dev-env.svg" width="360"/>
 
 Welcome to the UCC Netsoc Dev Env and thanks for wanting to contribute to our services :)
 
