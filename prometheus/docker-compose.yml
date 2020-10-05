@@ -3,6 +3,5 @@ services:
   prometheus:
     container_name: prometheus.netsoc.local
     image: prom/prometheus
-    container_name: prometheus
     ports:
       - 9090:9090
