@@ -1,0 +1,12 @@
+version: "3.7"
+services:
+  website:
+    container_name: netsoc.local
+    image: uccnetsoc/netsoc.co:dev-env
+    command: npm start -- --port 80
+    depends_on:
+      - discord-bot
+    environment:
+      - API_URL=http://discord-bot.netsoc.local
+    volumes:
+      - /app

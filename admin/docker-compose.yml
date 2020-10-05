@@ -1,0 +1,35 @@
+version: "3.7"
+services:
+  admin:
+    container_name: admin.netsoc.local
+    image: uccnetsoc/admin-ui:dev-env
+    command: npm run serve -- --port 80
+    volumes:
+      - /app
+    environment:
+      VUE_APP_NETSOC_API_URL: "http://api.netsoc.local"
+      VUE_APP_OIDC_AUTHORITY: http://keycloak.netsoc.local:8080/auth/realms/freeipa
+      VUE_APP_HCAPTCHA_SITE_KEY: 232b4196-0bdf-475c-a440-de29c066e683
+    depends_on:
+      - api
+      - proxy
+      - unitproxy
+      - unit
+      - ipa
+      - ipaclient
+      - keycloak
+      - mysql
+
+  api:
+    container_name: api.netsoc.local
+    restart: always
+    image: uccnetsoc/admin-api:dev-env
+    volumes:
+      - /app
+      - /requirements.txt
+      - /config.yml
+      - ../backing-services/freeipa/home/users:/home/users:z
+    command: /start-reload.sh --host 0.0.0.0 --port 8080
+    environment:
+      MODULE_NAME: "v1.main"
+      VARIABLE_NAME: "api"
