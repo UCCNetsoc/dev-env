@@ -24,9 +24,3 @@ services:
       - KEYCLOAK_REDIRECT_URI=http://games.netsoc.local/auth/oauth/callback
       - KEYCLOAK_BASE_URL=http://keycloak.netsoc.local:8080/auth
       - KEYCLOAK_REALMS=freeipa
-    #volumes:
-    #- /app
-    #- /app/tailwind.js
-    #- /app/tailwind.config.js
-    #- /app/resources/scripts
-    #- /app/var
