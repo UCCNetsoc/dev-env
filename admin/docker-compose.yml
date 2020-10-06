@@ -9,6 +9,7 @@ services:
     environment:
       VUE_APP_NETSOC_API_URL: "http://api.netsoc.local"
       VUE_APP_OIDC_AUTHORITY: http://keycloak.netsoc.local:8080/auth/realms/freeipa
+      VUE_APP_HCAPTCHA_SITE_KEY: 232b4196-0bdf-475c-a440-de29c066e683
     depends_on:
       - api
       - proxy
