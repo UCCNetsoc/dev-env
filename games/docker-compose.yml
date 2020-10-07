@@ -9,7 +9,7 @@ services:
       - 8443:443
     depends_on:
       - mysql
-      # - games-daemon
+      - games-daemon
       - phpmyadmin
       - proxy
       - keycloak
@@ -24,3 +24,9 @@ services:
       - KEYCLOAK_REDIRECT_URI=http://games.netsoc.local/auth/oauth/callback
       - KEYCLOAK_BASE_URL=http://keycloak.netsoc.local:8080/auth
       - KEYCLOAK_REALMS=freeipa
+      - SERVER_MEMORY=2000
+      - SERVER_SWAP=2000
+      - DISK_SPACE=4000
+      - SERVER_IO=500
+      - SERVER_CPU=400
+      - SERVER_THREADS=6
