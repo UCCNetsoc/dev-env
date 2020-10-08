@@ -8,6 +8,8 @@ services:
       - 3306:3306
     depends_on:
       - proxy
+    volumes:
+      - ./mysql/data:/docker-entrypoint-initdb.d
 
   auth:
     image: uccnetsoc/ldap:dev-env
