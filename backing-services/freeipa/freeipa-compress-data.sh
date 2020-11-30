@@ -1,4 +1,5 @@
 #!/bin/bash
-sudo rm ./freeipa-data.tar.gz
-sudo tar -czvf ./freeipa-data.tar.gz ./data/ ./home/
-sudo chown $UID:$UID ./freeipa-data.tar.gz
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+sudo rm $DIR/freeipa-data.tar.gz
+sudo tar -czvf $DIR/freeipa-data.tar.gz ./data/
+sudo chown $UID:$UID $DIR/freeipa-data.tar.gz
