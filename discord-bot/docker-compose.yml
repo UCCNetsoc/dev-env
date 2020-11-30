@@ -5,6 +5,7 @@ services:
     image: uccnetsoc/discord-bot:dev-env
     command: modd # Hot reloading
     depends_on:
+      - prometheus
       - mysql
     ports:
       - 8888:80
