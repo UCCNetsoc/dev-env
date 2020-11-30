@@ -1,8 +1,8 @@
 version: "3.7"
 services:
-  admin:
+  cloud:
     container_name: admin.netsoc.local
-    image: uccnetsoc/admin-ui:dev-env
+    image: uccnetsoc/cloud-ui:dev-env
     command: npm run serve -- --port 80
     volumes:
       - /app
@@ -23,7 +23,7 @@ services:
   api:
     container_name: api.netsoc.local
     restart: always
-    image: uccnetsoc/admin-api:dev-env
+    image: uccnetsoc/cloud-api:dev-env
     volumes:
       - /app
       - /requirements.txt
