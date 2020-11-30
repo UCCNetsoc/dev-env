@@ -11,51 +11,6 @@ services:
     volumes:
       - ./mysql/data:/docker-entrypoint-initdb.d
 
-  auth:
-    image: uccnetsoc/ldap:dev-env
-    ports:
-      - 389:389
-    depends_on:
-      - proxy
-
-  consul:
-    image: consul:1.6.1
-    container_name: consul.netsoc.local
-    command: agent -server -bootstrap-expect 1 -ui -client 0.0.0.0
-    environment:
-      CONSUL_BIND_INTERFACE: eth0
-    depends_on:
-      - proxy
-    ports:
-      - 8500:8500
-      - 8600:53/udp
-      - 8400:8400
-
-  vault:
-    image: uccnetsoc/vault:dev-env
-    container_name: vault.netsoc.local
-    environment:
-      VAULT_ADDR: http://0.0.0.0:8200
-      VAULT_DEV_LISTEN_ADDRESS: 0.0.0.0:8200
-      VAULT_DEV_ROOT_TOKEN_ID: netsoc
-      VAULT_TOKEN: netsoc
-    ports:
-      - 8200:8200
-    depends_on:
-      - proxy
-      - auth
-      - consul
-    cap_add:
-      - IPC_LOCK
-
-  isso:
-    image: uccnetsoc/isso:dev-env
-    container_name: isso.netsoc.local
-    ports:
-      - 8181:8080
-    depends_on:
-      - mysql
-
   proxy:
     image: wernight/dante
     container_name: proxy.netsoc.local
@@ -68,31 +23,9 @@ services:
     container_name: whoami.netsoc.local
     image: containous/whoami
 
-  unitproxy:
-    image: nginx:1.19.2
-    container_name: unitproxy.netsoc.local
-    depends_on:
-      - unit
-    volumes:
-      - "./unitproxy/unitproxy.nginx.conf:/etc/nginx/conf.d/default.conf"
-      - "./unitproxy/unitproxy.htpasswd:/unitproxy.htpasswd:ro"
-      - "./unitproxy/unitproxy-fix-socket-permissions.sh:/docker-entrypoint.d/fix-socket-permssions.sh"
-      - "unitsock:/var/run/:z"
-
-  unit:
-    privileged: true
-    container_name: unit.netsoc.local
-    cap_add:
-      - ALL
-    entrypoint: /usr/sbin/unitd --no-daemon --control unix:/var/run/control.unit.sock
-    image: nginx/unit:1.19.0-full
-    volumes:
-      - "unitsock:/var/run/:z"
-      - "./freeipa/home:/home/:z"
-
   ipa:
     container_name: ipa.netsoc.local
-    image: uccnetsoc/freeipa-server:4.8.7-pulled-2020-07-03
+    image: freeipa/freeipa-server:centos-8-4.8.4
     command: >
       ipa-server-install
       --unattended
@@ -145,26 +78,7 @@ services:
     hostname: keycloak.netsoc.local
     volumes:
       - "./keycloak/:/tmp/keycloak/"
-      - "./keycloak/krb5.keytab:/krb5.keytab"
       - "/etc/localtime:/etc/localtime:ro"
-
-  games-daemon:
-    container_name: games-daemon.netsoc.local
-    image: uccnetsoc/games-daemon:dev-env
-    hostname: games-daemon.netsoc.local
-    restart: always
-    working_dir: /go/wings
-    privileged: true
-    volumes:
-      - /var/lib/docker:/var/lib/docker
-      - ./games-daemon/data/config.yml:/config.yml
-      - ./games-daemon/data/logrotate.tpl:/go/wings/templates/logrotate.tpl
-      - /var/run/docker.sock:/var/run/docker.sock
-      - "/var/lib/pterodactyl/:/var/lib/pterodactyl/"
-      - "/srv/daemon-data/:/srv/daemon-data/"
-      - "/tmp/pterodactyl/:/tmp/pterodactyl/"
-      - "/etc/timezone:/etc/timezone:ro"
-    command: sh -c "sleep 30 && wings --config /config.yml --debug"
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
