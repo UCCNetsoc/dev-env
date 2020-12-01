@@ -6,30 +6,6 @@ volumes:
     temp: {}
 
 steps:
-  - name: build_auth
-    image: plugins/docker
-    volumes:
-      - name: cache
-        path: /var/lib/docker
-    settings:
-      tags:
-        - "${DRONE_COMMIT_SHA:0:7}_dev-env"
-        - dev-env
-      context: backing-services/auth
-      dockerfile: backing-services/auth/Dockerfile
-      repo: uccnetsoc/ldap
-      registry: docker.io
-      custom_dns: [1.1.1.1]
-      username:
-        from_secret: docker_hub_user
-      password:
-        from_secret: docker_hub_token
-    when:
-      event:
-        - push
-      branch:
-        - master
-
   - name: build_mysql
     image: plugins/docker
     volumes:
