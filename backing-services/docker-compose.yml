@@ -43,7 +43,7 @@ services:
       - "/tmp"
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
-      - "/etc/machine-id:/etc/machine-id:ro"
+      - "/etc/machine-id:/etc/machine-id:z"
       - "./freeipa/data:/data:z"
     sysctls:
       #  Fixes:

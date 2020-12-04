@@ -1,6 +1,5 @@
 #!/bin/bash
 if [ ! -d "./proxmox-ve" ]; then
-    vagrant plugin install vagrant-libvirt
     git clone https://github.com/rgl/proxmox-ve.git
     cp proxmox-ve.json proxmox-ve
     cd proxmox-ve
