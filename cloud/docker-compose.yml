@@ -30,3 +30,5 @@ services:
     environment:
       MODULE_NAME: "v1.main"
       VARIABLE_NAME: "api"
+    extra_hosts:
+      - "control.netsoc.local:10.10.10.2"
