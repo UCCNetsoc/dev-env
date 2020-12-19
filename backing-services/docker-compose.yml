@@ -18,6 +18,8 @@ services:
       - whoami
     ports:
       - "0.0.0.0:1080:1080"
+    extra_hosts:
+      - "control.netsoc.local:10.10.10.2"
 
   whoami:
     container_name: whoami.netsoc.local
