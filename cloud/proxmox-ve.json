@@ -1,6 +1,6 @@
 {
   "variables": {
-    "disk_size": "15375",
+    "disk_size": "300375",
     "iso_url": "http://download.proxmox.com/iso/proxmox-ve_6.3-1.iso",
     "iso_checksum": "5a1becb95ebc48e6eafeb9fa704d1025b8c35dfa1ba28c533dc2ebf15d0a039b",
     "hyperv_switch_name": "{{env `HYPERV_SWITCH_NAME`}}",
@@ -12,7 +12,7 @@
       "type": "qemu",
       "accelerator": "kvm",
       "cpus": 2,
-      "memory": 2048,
+      "memory": 4096,
       "qemuargs": [["-cpu", "host"]],
       "headless": true,
       "http_directory": ".",
@@ -64,8 +64,8 @@
       "guest_additions_mode": "attach",
       "headless": true,
       "vboxmanage": [
-        ["modifyvm", "{{.Name}}", "--memory", "2048"],
-        ["modifyvm", "{{.Name}}", "--cpus", "2"],
+        ["modifyvm", "{{.Name}}", "--memory", "8192"],
+        ["modifyvm", "{{.Name}}", "--cpus", "4"],
         ["modifyvm", "{{.Name}}", "--vram", "16"],
         ["modifyvm", "{{.Name}}", "--graphicscontroller", "vmsvga"],
         ["modifyvm", "{{.Name}}", "--audio", "none"],
@@ -75,11 +75,13 @@
         ["modifyvm", "{{.Name}}", "--nictype4", "82540EM"]
       ],
       "vboxmanage_post": [
-        ["storagectl", "{{.Name}}", "--name", "IDE Controller", "--remove"]
+        ["storagectl", "{{.Name}}", "--name", "IDE Controller", "--remove"],
+        ["lvextend", "-L", "+100%FREE", "/dev/mapper/pve-root"],
+        ["resize2fs", "/dev/mapper/pve-root"]
       ],
       "disk_size": "{{user `disk_size`}}",
       "hard_drive_interface": "sata",
-      "hard_drive_discard": true,
+      "hard_drive_discard": false,
       "iso_url": "{{user `iso_url`}}",
       "iso_checksum": "{{user `iso_checksum`}}",
       "ssh_username": "root",
@@ -127,7 +129,7 @@
       "enable_virtualization_extensions": true,
       "enable_mac_spoofing": true,
       "cpus": 2,
-      "memory": 2048,
+      "memory": 4096,
       "switch_name": "{{user `hyperv_switch_name`}}",
       "vlan_id": "{{user `hyperv_vlan_id`}}",
       "disk_size": "{{user `disk_size`}}",
