@@ -75,9 +75,7 @@
         ["modifyvm", "{{.Name}}", "--nictype4", "82540EM"]
       ],
       "vboxmanage_post": [
-        ["storagectl", "{{.Name}}", "--name", "IDE Controller", "--remove"],
-        ["lvextend", "-L", "+100%FREE", "/dev/mapper/pve-root"],
-        ["resize2fs", "/dev/mapper/pve-root"]
+        ["storagectl", "{{.Name}}", "--name", "IDE Controller", "--remove"]
       ],
       "disk_size": "{{user `disk_size`}}",
       "hard_drive_interface": "sata",
