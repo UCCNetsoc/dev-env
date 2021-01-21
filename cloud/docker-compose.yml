@@ -16,7 +16,7 @@ services:
       - ipa
       - ipaclient
       - keycloak
-      - mysql
+      - postgres
 
   api:
     container_name: api.netsoc.local
