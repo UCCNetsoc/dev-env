@@ -18,12 +18,24 @@ services:
       - whoami
     ports:
       - "0.0.0.0:1080:1080"
-    extra_hosts:
-      - "control.netsoc.local:10.10.10.2"
 
   whoami:
     container_name: whoami.netsoc.local
     image: containous/whoami
+
+  proxmox:
+    container_name: proxmox.netsoc.local
+    image: jkz0/qemu:latest
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+      - /dev/kvm
+    volumes:
+      - "./proxmox-ve/disk:/image"
+    restart: always
+    depends_on:
+      - proxy
 
   ipa:
     container_name: ipa.netsoc.local
@@ -92,6 +104,3 @@ services:
       - 8080:80
     volumes:
       - /sessions
-
-volumes:
-  unitsock:
