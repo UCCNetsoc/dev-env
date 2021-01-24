@@ -6,29 +6,29 @@ volumes:
     temp: {}
 
 steps:
-  - name: build_mysql
-    image: plugins/docker
-    volumes:
-      - name: cache
-        path: /var/lib/docker
-    settings:
-      tags:
-        - "${DRONE_COMMIT_SHA:0:7}_dev-env"
-        - dev-env
-      context: backing-services/mysql
-      dockerfile: backing-services/mysql/Dockerfile
-      repo: uccnetsoc/mysql
-      registry: docker.io
-      custom_dns: [1.1.1.1]
-      username:
-        from_secret: docker_hub_user
-      password:
-        from_secret: docker_hub_token
-    when:
-      event:
-        - push
-      branch:
-        - master
+  # - name: build_mysql
+  #   image: plugins/docker
+  #   volumes:
+  #     - name: cache
+  #       path: /var/lib/docker
+  #   settings:
+  #     tags:
+  #       - "${DRONE_COMMIT_SHA:0:7}_dev-env"
+  #       - dev-env
+  #     context: backing-services/mysql
+  #     dockerfile: backing-services/mysql/Dockerfile
+  #     repo: uccnetsoc/mysql
+  #     registry: docker.io
+  #     custom_dns: [1.1.1.1]
+  #     username:
+  #       from_secret: docker_hub_user
+  #     password:
+  #       from_secret: docker_hub_token
+  #   when:
+  #     event:
+  #       - push
+  #     branch:
+  #       - master
 
   - name: discord_notif_success
     image: appleboy/drone-discord

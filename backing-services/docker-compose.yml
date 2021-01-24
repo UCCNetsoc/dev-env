@@ -1,15 +1,16 @@
 version: "3.7"
 services:
-  mysql:
-    image: uccnetsoc/mysql:dev-env
-    container_name: mysql.netsoc.local
-    command: --default-authentication-plugin=mysql_native_password
+  postgres:
+    image: postgres
+    container_name: postgres.netsoc.local
+    environment:
+      POSTGRES_DB: promexporter
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
     ports:
-      - 3306:3306
+      - 5432:5432
     depends_on:
       - proxy
-    volumes:
-      - ./mysql/data:/docker-entrypoint-initdb.d
 
   proxy:
     image: wernight/dante

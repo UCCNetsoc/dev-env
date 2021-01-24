@@ -6,7 +6,7 @@ services:
     command: modd # Hot reloading
     depends_on:
       - prometheus
-      - mysql
+      - postgres
     ports:
       - 8888:80
     ## Vars to put in override:
