@@ -1,0 +1,74 @@
+{
+  "builders": [
+    {
+      "accelerator": "kvm",
+      "boot_command": [
+        "<enter>",
+        "<wait10><wait10><wait10><wait10><wait10>",
+        "<enter><wait>",
+        "<enter><wait>",
+        "United S<wait>t<wait>a<wait>t<wait>e<wait>s<wait><enter><wait><tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<enter><wait5>",
+        "password<tab><wait>",
+        "password<tab><wait>",
+        "pve@example.com<tab><wait>",
+        "<tab><wait>",
+        "<enter><wait5>",
+        "pve.example.com<tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<tab><wait>",
+        "<enter><wait5>",
+        "<enter><wait5>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<wait10><wait10><wait10><wait10><wait10><wait10>",
+        "<enter>"
+      ],
+      "boot_wait": "5s",
+      "cpus": 2,
+      "disk_discard": "unmap",
+      "disk_interface": "virtio-scsi",
+      "disk_size": "{{user `disk_size`}}",
+      "format": "raw",
+      "headless": true,
+      "http_directory": ".",
+      "iso_checksum": "{{user `iso_checksum`}}",
+      "iso_checksum_type": "sha256",
+      "iso_url": "{{user `iso_url`}}",
+      "memory": 4096,
+      "name": "proxmox-ve",
+      "qemuargs": [
+        [
+          "-cpu",
+          "host"
+        ]
+      ],
+      "shutdown_command": "poweroff",
+      "ssh_timeout": "60m",
+      "ssh_username": "root",
+      "ssh_password": "password",
+      "type": "qemu"
+    }
+  ],
+  "provisioners": [
+    {
+      "scripts": [
+        "provision.sh"
+      ],
+      "type": "shell"
+    }
+  ],
+  "variables": {
+    "disk_size": "300375",
+    "iso_checksum": "5a1becb95ebc48e6eafeb9fa704d1025b8c35dfa1ba28c533dc2ebf15d0a039b",
+    "iso_url": "http://download.proxmox.com/iso/proxmox-ve_6.3-1.iso"
+  }
+}
+
