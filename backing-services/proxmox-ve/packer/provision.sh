@@ -27,15 +27,25 @@ cat >/etc/network/interfaces <<'EOF'
 auto lo
 iface lo inet loopback
 
-auto eth0
-iface eth0 inet manual
+iface ens4 inet manual
 
 auto vmbr0
 iface vmbr0 inet dhcp
-	bridge_ports eth0
-	bridge_stp off
-	bridge_fd 0
+  bridge_ports ens4
+  bridge_stp off
+  bridge_fd 0
+
 EOF
+
+cat >/etc/rc.local <<'EOF'
+#!/bin/bash
+dhclient
+exit 0
+EOF
+
+chmod 755 /etc/rc.local
+systemctl enable rc-local
+
 
 # set the timezone.
 ln -fs /usr/share/zoneinfo/Europe/Dublin /etc/localtime

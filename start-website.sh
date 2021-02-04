@@ -31,5 +31,5 @@ if [[ $# -eq 2 ]] ; then
     fi
     exit 0
 fi
-sed -i "s/API_URL=.*/API_URL=https:\/\/events.netsoc.dev/g" ./website/docker-compose.override.yml
+sed -i "s/API_URL=.*/API_URL=https:\/\/bot.netsoc.co/g" ./website/docker-compose.override.yml
 bash -c "./dev-env up website"
