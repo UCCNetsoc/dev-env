@@ -1,0 +1,3 @@
+[submodule "backing-services/cloud-lxc-images"]
+	path = backing-services/cloud-lxc-images
+	url = https://github.com/UCCNetsoc/cloud-lxc-images.git
