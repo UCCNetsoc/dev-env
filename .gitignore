@@ -1,3 +1,2 @@
 */docker-compose.override.yml
-proxmox-ve
 logging.yml

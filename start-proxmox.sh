@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+if [ ! -f "./backing-services/proxmox-ve/cloud-lxc-images/README.md" ]; then
+    git pull --recurse-submodules
+fi
+
 # check if the packer disk exists
 if [ ! -f "./backing-services/proxmox-ve/packer/output-proxmox-ve/packer-proxmox-ve" ]; then
     echo "Building disk..."
