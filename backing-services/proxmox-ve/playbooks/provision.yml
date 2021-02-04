@@ -1,6 +1,6 @@
 - name: Setup
   become: yes
-  hosts: dev
+  hosts: localhost
   tasks:
     - name: Random number to avoid collisions
       set_fact:
@@ -83,18 +83,18 @@
 
 - name: Delegate to Dev VM
   become: yes
-  hosts: dev
+  hosts: localhost
   tasks:
     - name: Copy provisioning files
       copy:
-        src: ./lxc/
+        src: /cloud-lxc-images/playbooks/ubuntu
         dest: "/tmp/{{ uuid }}/lxc/"
   tags:
     - always
 
 # Additional base templates can be found here http://uk.images.linuxcontainers.org
 - name: Templates
-  hosts: dev
+  hosts: localhost
   become: yes
   tasks:
     - name: Ghost CMS Ubuntu
@@ -251,7 +251,7 @@
 # As such we must extract rootfs and then compress just its contents
 - name: Fix Archives
   become: yes
-  hosts: dev
+  hosts: localhost
   tasks:
     - name: Get all templates
       find:
@@ -274,7 +274,7 @@
 
 - name: Copy Templates to Proxmox
   become: yes
-  hosts: dev
+  hosts: localhost
   tasks:
     - name: Copy templates
       command: "mv {{ template_output }}/* /var/lib/vz/template/cache/"
@@ -283,7 +283,7 @@
 
 - name: Cleanup
   become: yes
-  hosts: dev
+  hosts: localhost
   tasks:
     - name: Tidy up directory
       file:

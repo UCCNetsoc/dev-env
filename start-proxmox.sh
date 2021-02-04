@@ -20,4 +20,4 @@ if [ ! -f "./backing-services/proxmox-ve/disk" ]; then
 fi
 
 echo "Starting Proxmox"
-./dev-env up proxmox
+./dev-env up proxmox 

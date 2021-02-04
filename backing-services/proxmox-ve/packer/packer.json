@@ -43,12 +43,7 @@
       "iso_url": "{{user `iso_url`}}",
       "memory": 4096,
       "name": "proxmox-ve",
-      "qemuargs": [
-        [
-          "-cpu",
-          "host"
-        ]
-      ],
+      "qemuargs": [["-cpu", "host"]],
       "shutdown_command": "poweroff",
       "ssh_password": "password",
       "ssh_timeout": "60m",
@@ -58,9 +53,17 @@
   ],
   "provisioners": [
     {
-      "scripts": [
-        "provision.sh"
-      ],
+      "type": "file",
+      "source": "../cloud-lxc-images",
+      "destination": "/cloud-lxc-images"
+    },
+    {
+      "type": "file",
+      "source": "../playbooks",
+      "destination": "/playbooks"
+    },
+    {
+      "scripts": ["provision.sh"],
       "type": "shell"
     }
   ],
@@ -70,4 +73,3 @@
     "iso_url": "http://download.proxmox.com/iso/proxmox-ve_6.3-1.iso"
   }
 }
-

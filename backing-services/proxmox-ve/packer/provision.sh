@@ -76,6 +76,15 @@ rm -f /var/lib/dbus/machine-id
 systemctl stop systemd-random-seed
 rm -f /var/lib/systemd/random-seed
 
+apt install -y python3
+apt install -y python3-distutils
+apt install -y python3-apt
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python3 get-pip.py
+cd /playbooks
+pip3 install -r requirements.txt
+ansible-playbook provision.yml
+
 # clean packages.
 apt-get -y autoremove
 apt-get -y clean
