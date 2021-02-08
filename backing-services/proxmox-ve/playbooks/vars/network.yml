@@ -1,0 +1,4 @@
+vlan:
+  dhcp: 255
+
+vmbr: "vmbr0"
