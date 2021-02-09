@@ -54,11 +54,6 @@
   "provisioners": [
     {
       "type": "file",
-      "source": "../cloud-lxc-images",
-      "destination": "/cloud-lxc-images"
-    },
-    {
-      "type": "file",
       "source": "../playbooks",
       "destination": "/playbooks"
     },

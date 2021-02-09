@@ -1,3 +1,0 @@
-[submodule "backing-services/proxmox-ve/cloud-lxc-images"]
-	path = backing-services/proxmox-ve/cloud-lxc-images
-	url = https://github.com/UCCNetsoc/cloud-lxc-images.git

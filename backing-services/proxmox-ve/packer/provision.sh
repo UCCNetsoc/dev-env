@@ -77,10 +77,12 @@ systemctl stop systemd-random-seed
 rm -f /var/lib/systemd/random-seed
 
 apt update
+pveam update
 apt install -y python3
 apt install -y python3-pip
 apt install -y pkg-config
 apt install -y git
+apt install -y jq
 pip3 install -r /playbooks/requirements.txt
 cd /playbooks && ansible-playbook provision.yml
 
