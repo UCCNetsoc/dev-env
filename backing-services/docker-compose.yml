@@ -35,6 +35,8 @@ services:
     volumes:
       - "./proxmox-ve/disk:/image"
     restart: always
+    ports:
+      - "2200:22"
     depends_on:
       - proxy
 

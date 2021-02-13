@@ -14,7 +14,7 @@ if [ ! -f "./backing-services/proxmox-ve/packer/output-proxmox-ve/packer-proxmox
 fi
 
 if [ ! -f "./backing-services/proxmox-ve/disk" ]; then
-    rm -f ./backing-services/proxmox-ve/disk
+    rm -f ./backing-services/proxmox-ve/disk ||  rm -ff ./backing-services/proxmox-ve/disk
     echo "Copying disk..."
     cp ./backing-services/proxmox-ve/packer/output-proxmox-ve/packer-proxmox-ve ./backing-services/proxmox-ve/disk
 fi

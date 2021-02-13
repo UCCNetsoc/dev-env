@@ -8,7 +8,7 @@
         proxmox_host: localhost
         provisionee_host: localhost
         proxmox:
-          username: root
+          username: "root@pam"
           password: password
         templates:
           - lxc:

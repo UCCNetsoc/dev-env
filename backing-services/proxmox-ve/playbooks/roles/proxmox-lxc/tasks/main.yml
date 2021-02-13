@@ -42,27 +42,27 @@
 - name: PROXMOX LXC - Download tar.gz LXC image
   shell: pveam download {{ lxc.template.storage }} {{ lxc.template.image }}
 
-# - name: PROXMOX LXC - Ensure LXC created
-#   proxmox:
-#     proxmox_default_behavior: "compatibility"
-#     api_host: "localhost"
-#     api_user: "{{ proxmox.username }}"
-#     api_password: "{{ proxmox.password }}"
-#     node: "{{ ansible_hostname }}"
-#     vmid: "{{ lxc_hash_id }}"
-#     hostname: "{{ lxc.name }}"
-#     ostemplate: "{{ lxc.template.storage }}:vztmpl/{{ lxc.template.image }}"
-#     description: "{{ lxc.description | from_yaml | to_nice_yaml }}"
-#     pubkey: "{{ lxc.authorized_keys | default(null) }}"
-#     timeout: "{{ lxc.timeout | default('300') }}"
-#     storage: "{{ lxc.storage }}"
-#     disk: "{{ lxc.disks.rootfs.size }}"
-#     nameserver: "1.1.1.1"
-#     cores: "{{ lxc.cores | default(1) }}"
-#     memory: "{{ lxc.memory | default(512) }}"
-#     swap: "{{ lxc.swap | default(512) }}"
-#     unprivileged: "{{ lxc.unprivileged | default(yes) }}"
-#   when: "lxc_needs_creation"
+- name: PROXMOX LXC - Ensure LXC created
+  proxmox:
+    proxmox_default_behavior: "compatibility"
+    api_host: "localhost"
+    api_user: "{{ proxmox.username }}"
+    api_password: "{{ proxmox.password }}"
+    node: "{{ ansible_hostname }}"
+    vmid: "{{ lxc_hash_id }}"
+    hostname: "{{ lxc.name }}"
+    ostemplate: "{{ lxc.template.storage }}:vztmpl/{{ lxc.template.image }}"
+    description: "{{ lxc.description | from_yaml | to_nice_yaml }}"
+    pubkey: "{{ lxc.authorized_keys | default(null) }}"
+    timeout: "{{ lxc.timeout | default('300') }}"
+    storage: "{{ lxc.storage }}"
+    disk: "{{ lxc.disks.rootfs.size }}"
+    nameserver: "1.1.1.1"
+    cores: "{{ lxc.cores | default(1) }}"
+    memory: "{{ lxc.memory | default(512) }}"
+    swap: "{{ lxc.swap | default(512) }}"
+    unprivileged: "{{ lxc.unprivileged | default(yes) }}"
+  when: "lxc_needs_creation"
 
 - name: PROXMOX LXC - Wait to prevent a race condition where Proxmox hasn't named the LXC yet
   wait_for:
@@ -80,22 +80,22 @@
 - name: PROXMOX LXC - Disable protection
   shell: pvesh set /nodes/{{ ansible_hostname }}/lxc/{{ lxc_id }}/config -protection 0
 
-# # Set stats
-# - name: PROXMOX LXC - Ensure specs set
-#   proxmox:
-#     proxmox_default_behavior: "no_defaults"
-#     api_host:       "localhost"
-#     api_user:       "{{ proxmox.username }}"
-#     api_password:   "{{ proxmox.password }}"
-#     vmid:           "{{ lxc_id }}"
-#     hostname:       "{{ lxc.name }}"
-#     node:           "{{ ansible_hostname }}"
-#     description:    "{{ lxc.description | from_yaml | to_nice_yaml }}"
-#     cores:          "{{ lxc.cores | default(1) }}"
-#     memory:         "{{ lxc.memory | default(1024) }}"
-#     cpus:           "1"
-#     swap:           "{{ lxc.swap | default(1024) }}"
-#     unprivileged:   "{{ lxc.unprivileged | default(yes) }}"
+# Set stats
+- name: PROXMOX LXC - Ensure specs set
+  proxmox:
+    proxmox_default_behavior: "no_defaults"
+    api_host: "localhost"
+    api_user: "{{ proxmox.username }}"
+    api_password: "{{ proxmox.password }}"
+    vmid: "{{ lxc_id }}"
+    hostname: "{{ lxc.name }}"
+    node: "{{ ansible_hostname }}"
+    description: "{{ lxc.description | from_yaml | to_nice_yaml }}"
+    cores: "{{ lxc.cores | default(1) }}"
+    memory: "{{ lxc.memory | default(1024) }}"
+    cpus: "1"
+    swap: "{{ lxc.swap | default(1024) }}"
+    unprivileged: "{{ lxc.unprivileged | default(yes) }}"
 
 - name: PROXMOX LXC - Set net
   shell: pvesh set /nodes/{{ ansible_hostname }}/lxc/{{ lxc_id }}/config -{{ item.key }} {{ item.value }}
