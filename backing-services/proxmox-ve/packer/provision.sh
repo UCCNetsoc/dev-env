@@ -27,23 +27,25 @@ cat >/etc/network/interfaces <<'EOF'
 auto lo
 iface lo inet loopback
 
-iface ens4 inet manual
+iface ens3 inet manual
 
 auto vmbr0
 iface vmbr0 inet dhcp
-  bridge_ports ens4
+  bridge_ports ens3
   bridge_stp off
   bridge_fd 0
-  bridge-vlan-aware yes
-  bridge-vids 2-4094
 
-auto vmbr0.40
-iface vmbr0.40 inet manual
-  vlan-id 40
+auto vmbr1
+iface vmbr1 inet static
+  address  10.10.10.1
+  netmask  255.255.255.0
+  bridge_ports none
+  bridge_stp off
+  bridge_fd 0
 
-auto vmbr0.255
-iface vmbr0.255 inet manual
-  vlan-id 255
+  post-up echo 1 > /proc/sys/net/ipv4/ip_forward
+  post-up   iptables -t nat -A POSTROUTING -s '10.10.10.0/24' -o vmbr0 -j MASQUERADE
+  post-down iptables -t nat -D POSTROUTING -s '10.10.10.0/24' -o vmbr0 -j MASQUERADE
 
 EOF
 
@@ -95,23 +97,15 @@ apt install -y dnsmasq
 cat >/etc/dnsmasq.d/dhcp.conf <<'EOF'
 # Set the interface on which dnsmasq operates.
 # If not set, all the interfaces is used.
-#interface=enp5s0
+interface=vmbr1
 
-# To disable dnsmasq's DNS server functionality.
 port=0
-
 # To enable dnsmasq's DHCP server functionality.
-dhcp-range=10.255.0.2,10.255.0.150,255.255.0.0,12h
-#dhcp-range=192.168.0.50,192.168.0.150,12h
-
-# Set static IPs of other PCs and the Router.
+dhcp-range=10.10.10.3,10.10.10.100,12h
+dhcp-option=option:dns-server,1.1.1.1
 
 # Set gateway as Router. Following two lines are identical.
-#dhcp-option=option:router,192.168.0.1
-dhcp-option=3,10.255.0.1
-
-# Set DNS server as Router.
-dhcp-option=6,10.255.0.1
+dhcp-option=3,10.10.10.1
 
 # Logging.
 log-facility=/var/log/dnsmasq.log   # logfile path.
@@ -119,7 +113,6 @@ log-async
 log-queries # log queries.
 log-dhcp    # log dhcp related messages.
 EOF
-systemctl stop udhcpd
 systemctl restart dnsmasq
 
 apt install -y python3
@@ -129,7 +122,7 @@ apt install -y git
 apt install -y jq
 pip3 install -r /playbooks/requirements.txt
 cd /playbooks 
-ansible-playbook provision.yml || true
+# ansible-playbook provision.yml || true
 
 # clean packages.
 apt-get -y autoremove
