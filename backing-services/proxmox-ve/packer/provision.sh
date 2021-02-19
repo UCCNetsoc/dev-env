@@ -123,9 +123,10 @@ apt install -y jq
 pip3 install -r /playbooks/requirements.txt
 cd /playbooks 
 if [ -f provision-nac.yml ]; then
-  ansible-playbook -i hosts provision-nac.yml 
+  export ANSIBLE_HOST_KEY_CHECKING=False
+  ansible-playbook provision-nac.yml
 else
-  ansible-playbook -i hosts provision.yml 
+  ansible-playbook provision.yml 
 fi
 
 # clean packages.

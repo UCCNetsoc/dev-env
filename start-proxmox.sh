@@ -3,6 +3,9 @@ set -e
 
 if [[ $# -eq 1 ]] ; then
     cp $1/provision-proxmox-templates.yml backing-services/proxmox-ve/playbooks/provision-nac.yml
+    sed -i 's/leela/localhost/g' backing-services/proxmox-ve/playbooks/provision-nac.yml
+else
+    rm backing-services/proxmox-ve/playbooks/provision-nac.yml  || true
 fi
 
 if [ ! -f "./backing-services/proxmox-ve/cloud-lxc-images/README.md" ]; then
