@@ -20,20 +20,19 @@
 - name: PROXMOX TEMPLATES (LXC) - Start container
   proxmox:
     proxmox_default_behavior: "no_defaults"
-    api_host:       "localhost"
-    api_user:       "{{ proxmox.username }}"
-    api_password:   "{{ proxmox.password }}"
-    node:           "{{ inventory_hostname }}"
-    hostname:       "{{ template.lxc.name }}"
-    state:          started
-  ignore_errors:  yes
+    api_host: "localhost"
+    api_user: "{{ proxmox.username }}"
+    api_password: "{{ proxmox.password }}"
+    node: "{{ inventory_hostname }}"
+    hostname: "{{ template.lxc.name }}"
+    state: started
+  ignore_errors: yes
   when: "inventory_hostname == proxmox_host"
 
 - name: PROXMOX TEMPLATES (LXC) - Wait for net
   pause:
     seconds: 5
   when: "inventory_hostname == proxmox_host"
-
 
 - name: PROXMOX TEMPLATES (LXC) - Get IP
   shell: |
@@ -65,7 +64,7 @@
     ansible_host: "{{ hostvars[proxmox_host]['provisionee_ip'] }}"
     ansible_ssh_user: root
     ansible_ssh_private_key_file: "/tmp/ansible_{{ template.lxc.name }}.id_ssh"
-    ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+    ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
   when: "inventory_hostname == provisionee_host"
 
 - name: PROXMOX TEMPLATES (LXC) - Gather facts on LXC
@@ -103,9 +102,9 @@
   proxmox:
     proxmox_default_behavior: "no_defaults"
     node: "{{ proxmox_host }}"
-    api_host:       "localhost"
-    api_user:       "{{ proxmox.username }}"
-    api_password:   "{{ proxmox.password }}"
+    api_host: "localhost"
+    api_user: "{{ proxmox.username }}"
+    api_password: "{{ proxmox.password }}"
     hostname: "{{ template.lxc.name }}"
     state: stopped
     force: yes

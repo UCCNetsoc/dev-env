@@ -122,7 +122,7 @@ apt install -y git
 apt install -y jq
 pip3 install -r /playbooks/requirements.txt
 cd /playbooks 
-# ansible-playbook provision.yml || true
+ansible-playbook -i hosts provision.yml || true
 
 # clean packages.
 apt-get -y autoremove

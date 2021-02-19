@@ -1,12 +1,19 @@
-- name: Provision Netsoc Cloud templates
+- name: Add Provisionee host
   hosts: localhost
+  tasks:
+    - add_host:
+        name: provisionee
+  tags:
+    - always
+- name: Provision Netsoc Cloud templates
+  hosts: localhost, provisionee
   gather_facts: no
   any_errors_fatal: true
   roles:
     - role: proxmox-templates
       vars:
         proxmox_host: localhost
-        provisionee_host: localhost
+        provisionee_host: provisionee
         proxmox:
           username: "root@pam"
           password: password
