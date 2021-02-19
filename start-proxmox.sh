@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+if [[ $# -eq 1 ]] ; then
+    cp $1/provision-proxmox-templates.yml backing-services/proxmox-ve/playbooks/provision-nac.yml
+fi
+
 if [ ! -f "./backing-services/proxmox-ve/cloud-lxc-images/README.md" ]; then
     git pull --recurse-submodules
 fi

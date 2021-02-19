@@ -6,6 +6,17 @@
     name: ghost:3.40.5
     source: pull
 
+- name: Add golang PPA
+  shell: |
+    echo -e '\n' | add-apt-repository ppa:longsleep/golang-backports
+  delegate_to: localhost
+
+- name: Install golang
+  apt:
+    name: golang-go
+    update_cache: yes
+  delegate_to: localhost
+
 - name: Build Config Tool
   shell:
     chdir: netsoc-cloud/templates/
