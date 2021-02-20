@@ -5,6 +5,8 @@ if [[ $# -eq 0 ]] ; then
     exit 1
 fi
 
+./start-proxmox.sh &
+
 DEVENV_DIR=`pwd`
 CLOUD_DIR=$(readlink -f $1)
 

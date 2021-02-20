@@ -56,6 +56,8 @@ exit 0
 EOF
 
 
+ifup vmbr1
+
 chmod 755 /etc/rc.local
 systemctl enable rc-local
 
@@ -115,6 +117,8 @@ log-dhcp    # log dhcp related messages.
 EOF
 systemctl restart dnsmasq
 
+ip addr
+
 apt install -y python3
 apt install -y python3-pip
 apt install -y pkg-config
@@ -123,10 +127,9 @@ apt install -y jq
 pip3 install -r /playbooks/requirements.txt
 cd /playbooks 
 if [ -f provision-nac.yml ]; then
-  export ANSIBLE_HOST_KEY_CHECKING=False
-  ansible-playbook provision-nac.yml
+  ansible-playbook provision-nac.yml || true
 else
-  ansible-playbook provision.yml 
+  ansible-playbook provision.yml || true
 fi
 
 # clean packages.
