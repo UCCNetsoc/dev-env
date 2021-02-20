@@ -4,6 +4,7 @@ set -e
 if [[ $# -eq 1 ]] ; then
     cp $1/provision-proxmox-templates.yml backing-services/proxmox-ve/playbooks/provision-nac.yml
     sed -i 's/leela/localhost/g' backing-services/proxmox-ve/playbooks/provision-nac.yml
+    yes | cp -R $1/netsoc-cloud/templates backing-services/proxmox-ve/netsoc-cloud/templates
 else
     rm backing-services/proxmox-ve/playbooks/provision-nac.yml  || true
 fi

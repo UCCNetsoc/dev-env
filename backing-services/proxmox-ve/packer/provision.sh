@@ -120,6 +120,7 @@ systemctl restart dnsmasq
 ip addr
 
 apt install -y python3
+apt install -y golang
 apt install -y python3-pip
 apt install -y pkg-config
 apt install -y git

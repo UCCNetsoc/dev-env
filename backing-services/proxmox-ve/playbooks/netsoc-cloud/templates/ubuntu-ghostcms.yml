@@ -6,20 +6,9 @@
     name: ghost:3.40.5
     source: pull
 
-- name: Add golang PPA
-  shell: |
-    echo -e '\n' | add-apt-repository ppa:longsleep/golang-backports
-  delegate_to: localhost
-
-- name: Install golang
-  apt:
-    name: golang-go
-    update_cache: yes
-  delegate_to: localhost
-
 - name: Build Config Tool
   shell:
-    chdir: netsoc-cloud/templates/
+    chdir: /playbooks/netsoc-cloud/templates/
     cmd: >
       CGO_ENABLED=0 GOOS=linux GOARCH=amd64
       go build -a -tags netgo -ldflags='-extldflags=-static"'
