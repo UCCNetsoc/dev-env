@@ -1,6 +1,6 @@
 ---
 - name: Check if VM with this name already exists (also gets id)
-  shell: pvesh get /nodes/{{ inventory_hostname }}/qemu/ --output-format=json | jq '.[] | select(.name=="{{ vm.name }}").vmid' -r --exit-status
+  shell: pvesh get /nodes/pve/qemu/ --output-format=json | jq '.[] | select(.name=="{{ vm.name }}").vmid' -r --exit-status
   register: vm_exists_result
   ignore_errors: true
 
@@ -16,14 +16,14 @@
   when: "('rc' in vm_exists_result and vm_exists_result.rc == 0)"
 
 - name: Stop already existing VM
-  shell: pvesh create /nodes/{{ inventory_hostname }}/qemu/{{ vm_existing_id }}/status/stop
+  shell: pvesh create /nodes/pve/qemu/{{ vm_existing_id }}/status/stop
   when: "vm_already_exists is true"
 
 - set_fact:
     vm_needs_creation: false
 
 - name: Destroy already existing VM if we're recreating it
-  shell: pvesh delete /nodes/{{ inventory_hostname }}/qemu/{{ vm_existing_id }}
+  shell: pvesh delete /nodes/pve/qemu/{{ vm_existing_id }}
   when: "vm_already_exists is true and (recreate is defined and recreate is true)"
 
 - set_fact:
@@ -81,7 +81,7 @@
 # and overrode a load of previous commits ._.
 # you can use register: output & output.vm_id instead
 - name: Get created/existing VM ID
-  shell: pvesh get /nodes/{{ inventory_hostname }}/qemu/ --output-format=json | jq '.[] | select(.name=="{{ vm.name }}").vmid' -r --exit-status
+  shell: pvesh get /nodes/pve/qemu/ --output-format=json | jq '.[] | select(.name=="{{ vm.name }}").vmid' -r --exit-status
   register: vm_id_result
 - set_fact:
     vm_id: "{{ vm_id_result.stdout | trim }}"
@@ -89,7 +89,7 @@
     msg: "{{ vm_id }}"
 
 - name: Temporarily disable protection
-  shell: pvesh set /nodes/{{ inventory_hostname }}/qemu/{{ vm_id }}/config -protection 0
+  shell: pvesh set /nodes/pve/qemu/{{ vm_id }}/config -protection 0
 
 # Set some vm stats
 - name: Ensure specs set
@@ -99,7 +99,7 @@
     api_user: "{{ proxmox.username }}"
     api_password: "{{ proxmox.password }}"
     name: "{{ vm.name }}"
-    node: "{{ inventory_hostname }}"
+    node: "pve"
     description: "{{ vm.description | from_yaml | to_nice_yaml }}"
     cores: "{{ vm.cores | default(1) }}"
     memory: "{{ vm.memory | default(1024) }}"
@@ -147,18 +147,18 @@
 
 - name: Add boot disk if it does not exist
   shell: |
-    pvesh get /nodes/{{ inventory_hostname }}/qemu/{{ vm_id }}/config --output-format=json | jq 'select(.virtio0)' -r --exit-status
+    pvesh get /nodes/pve/qemu/{{ vm_id }}/config --output-format=json | jq 'select(.virtio0)' -r --exit-status
 
     if [ $? -eq 4 ]; then
       cp {{ clone_storage_path }}/template/qemu/{{ vm.template.image_url.split('/')[-1] }}.qcow2 {{ clone_storage_path }}/images/{{ vm_id }}/vm-{{ vm_id }}-disk-0.qcow2 &&
-      pvesh create /nodes/{{ inventory_hostname }}/qemu/{{ vm_id }}/config -virtio0 {{ vm.template.storage }}:{{ vm_id }}/vm-{{ vm_id }}-disk-0.qcow2
+      pvesh create /nodes/pve/qemu/{{ vm_id }}/config -virtio0 {{ vm.template.storage }}:{{ vm_id }}/vm-{{ vm_id }}-disk-0.qcow2
     fi
 
 - name: Add EFI disk if it does not exist
   shell: |
-    pvesh get /nodes/{{ inventory_hostname }}/qemu/{{ vm_id }}/config --output-format=json | jq 'select(.efidisk0)' -r --exit-status
+    pvesh get /nodes/pve/qemu/{{ vm_id }}/config --output-format=json | jq 'select(.efidisk0)' -r --exit-status
     if [ $? -eq 4 ]; then
-      pvesh create /nodes/{{ inventory_hostname }}/qemu/{{ vm_id }}/config -efidisk0 {{ vm.storage }}:1,format=qcow2
+      pvesh create /nodes/pve/qemu/{{ vm_id }}/config -efidisk0 {{ vm.storage }}:1,format=qcow2
     fi
 
 - name: Set boot disk order
@@ -166,38 +166,38 @@
 
 - name: Get storage of boot disk
   shell: |
-    pvesh get /nodes/{{ inventory_hostname }}/qemu/{{ vm_id }}/config --output-format=json | jq .virtio0 -r --exit-status
+    pvesh get /nodes/pve/qemu/{{ vm_id }}/config --output-format=json | jq .virtio0 -r --exit-status
   register: "boot_disk_storage_result"
 
 - set_fact:
     boot_disk_storage: "{{ boot_disk_storage_result.stdout.split(':')[0] | trim }}"
 
 - name: Move boot disk to target storage if target storage is different than current/clone storage
-  shell: pvesh create /nodes/{{ inventory_hostname }}/qemu/{{ vm_id }}/move_disk -storage {{ vm.storage }} -disk virtio0 -delete 1
+  shell: pvesh create /nodes/pve/qemu/{{ vm_id }}/move_disk -storage {{ vm.storage }} -disk virtio0 -delete 1
   when: "vm.storage != boot_disk_storage"
 
 - name: Get storage of efi disk
   shell: |
-    pvesh get /nodes/{{ inventory_hostname }}/qemu/{{ vm_id }}/config --output-format=json | jq .efidisk0 -r --exit-status
+    pvesh get /nodes/pve/qemu/{{ vm_id }}/config --output-format=json | jq .efidisk0 -r --exit-status
   register: "efi_disk_storage_result"
 
 - set_fact:
     efi_disk_storage: "{{ efi_disk_storage_result.stdout.split(':')[0]  | trim }}"
 
 - name: Move efi disk to target storage if target storage is different than current/clone storage
-  shell: pvesh create /nodes/{{ inventory_hostname }}/qemu/{{ vm_id }}/move_disk -storage {{ vm.storage }} -disk efidisk0 -delete 1
+  shell: pvesh create /nodes/pve/qemu/{{ vm_id }}/move_disk -storage {{ vm.storage }} -disk efidisk0 -delete 1
   when: "vm.storage != efi_disk_storage"
 
 - name: Resize boot disk
-  shell: pvesh set /nodes/{{ inventory_hostname }}/qemu/{{ vm_id }}/resize -disk virtio0 -size {{ vm.disks.boot.size }}G
+  shell: pvesh set /nodes/pve/qemu/{{ vm_id }}/resize -disk virtio0 -size {{ vm.disks.boot.size }}G
 
 - name: Add the extra disks if they don't exist already and resize
   shell: |
-    pvesh get /nodes/{{ inventory_hostname }}/qemu/{{ vm_id }}/config --output-format=json | jq 'select(.virtio{{ index+1 }})' -r --exit-status
+    pvesh get /nodes/pve/qemu/{{ vm_id }}/config --output-format=json | jq 'select(.virtio{{ index+1 }})' -r --exit-status
     if [ $? -eq 4 {{ '|| true' if item.override is defined and item.override is true else '' }} ]; then
-      pvesh create /nodes/{{ inventory_hostname }}/qemu/{{ vm_id }}/config -virtio{{ index+1 }} '{{ vm.storage }}:{{ item.size | regex_replace ('[^0-9]','') }},format={{ item.format | default("raw") }}'
+      pvesh create /nodes/pve/qemu/{{ vm_id }}/config -virtio{{ index+1 }} '{{ vm.storage }}:{{ item.size | regex_replace ('[^0-9]','') }},format={{ item.format | default("raw") }}'
     fi
-    pvesh set /nodes/{{ inventory_hostname }}/qemu/{{ vm_id }}/resize -disk virtio{{ index+1 }} -size {{ item.size }}G
+    pvesh set /nodes/pve/qemu/{{ vm_id }}/resize -disk virtio{{ index+1 }} -size {{ item.size }}G
   args:
     executable: /bin/bash
   loop: "{{ vm.disks.extra | default('[]') }}"
@@ -223,7 +223,7 @@
     api_user: "{{ proxmox.username }}"
     api_password: "{{ proxmox.password }}"
     name: "{{ vm.name }}"
-    node: "{{ inventory_hostname }}"
+    node: "pve"
     state: stopped
 
 - name: FORCE RERUN CLOUDINIT - Clear Cloud-Init metadata file
@@ -253,9 +253,9 @@
 
 - name: FORCE RERUN CLOUDINIT - Regenerate Cloud-Init drive
   shell: |
-    pvesh set /nodes/{{ inventory_hostname }}/qemu/{{ vm_id }}/config -delete ide2
-    pvesh set /nodes/{{ inventory_hostname }}/qemu/{{ vm_id }}/config --cicustom "user={{ vm.cloudinit.storage }}:snippets/{{ vm.name }}.userdata.yml,network={{ vm.cloudinit.storage }}:snippets/{{ vm.name }}.networkconfig.yml,meta={{ vm.cloudinit.storage }}:snippets/{{ vm.name }}.metadata.yml"
-    pvesh set /nodes/{{ inventory_hostname }}/qemu/{{ vm_id }}/config -ide2 {{ vm.cloudinit.storage }}:cloudinit,format=qcow2
+    pvesh set /nodes/pve/qemu/{{ vm_id }}/config -delete ide2
+    pvesh set /nodes/pve/qemu/{{ vm_id }}/config --cicustom "user={{ vm.cloudinit.storage }}:snippets/{{ vm.name }}.userdata.yml,network={{ vm.cloudinit.storage }}:snippets/{{ vm.name }}.networkconfig.yml,meta={{ vm.cloudinit.storage }}:snippets/{{ vm.name }}.metadata.yml"
+    pvesh set /nodes/pve/qemu/{{ vm_id }}/config -ide2 {{ vm.cloudinit.storage }}:cloudinit,format=qcow2
   when: "vm_needs_creation is false and vm.cloudinit is defined and vm.cloudinit.force is true"
 
 - name: FORCE RERUN CLOUDINIT - Start VM
@@ -264,13 +264,13 @@
     api_user: "{{ proxmox.username }}"
     api_password: "{{ proxmox.password }}"
     name: "{{ vm.name }}"
-    node: "{{ inventory_hostname }}"
+    node: "pve"
     state: started
   when: "vm_needs_creation is false and vm.cloudinit is defined and vm.cloudinit.force is true"
 
 - name: FORCE RERUN CLOUDINIT - Wait for VM to shutdown after clearing Cloud-Init
   shell: |
-    while pvesh get nodes/{{ inventory_hostname }}/qemu/{{ vm_id }}/status/current --output-format=json | jq 'select(.status=="running")' -r --exit-status;
+    while pvesh get nodes/pve/qemu/{{ vm_id }}/status/current --output-format=json | jq 'select(.status=="running")' -r --exit-status;
       do sleep 1;
     done
   when: "vm_needs_creation is false and vm.cloudinit is defined and vm.cloudinit.force is true"
@@ -281,7 +281,7 @@
     api_user: "{{ proxmox.username }}"
     api_password: "{{ proxmox.password }}"
     name: "{{ vm.name }}"
-    node: "{{ inventory_hostname }}"
+    node: "pve"
     state: stopped
   when: "vm_needs_creation is false and vm.cloudinit is defined and  vm.cloudinit.force is true"
 
@@ -311,7 +311,7 @@
 
 - name: Regenerate Cloud-Init drive
   shell: |
-    pvesh set /nodes/{{ inventory_hostname }}/qemu/{{ vm_id }}/config -delete ide2
-    pvesh set /nodes/{{ inventory_hostname }}/qemu/{{ vm_id }}/config --cicustom "user={{ vm.cloudinit.storage }}:snippets/{{ vm.name }}.userdata.yml,network={{ vm.cloudinit.storage }}:snippets/{{ vm.name }}.networkconfig.yml,meta={{ vm.cloudinit.storage }}:snippets/{{ vm.name }}.metadata.yml"
-    pvesh set /nodes/{{ inventory_hostname }}/qemu/{{ vm_id }}/config -ide2 {{ vm.cloudinit.storage }}:cloudinit,format=qcow2
+    pvesh set /nodes/pve/qemu/{{ vm_id }}/config -delete ide2
+    pvesh set /nodes/pve/qemu/{{ vm_id }}/config --cicustom "user={{ vm.cloudinit.storage }}:snippets/{{ vm.name }}.userdata.yml,network={{ vm.cloudinit.storage }}:snippets/{{ vm.name }}.networkconfig.yml,meta={{ vm.cloudinit.storage }}:snippets/{{ vm.name }}.metadata.yml"
+    pvesh set /nodes/pve/qemu/{{ vm_id }}/config -ide2 {{ vm.cloudinit.storage }}:cloudinit,format=qcow2
   when: "vm.cloudinit is defined"

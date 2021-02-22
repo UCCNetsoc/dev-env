@@ -1,6 +1,3 @@
-
-
-
 - name: PROXMOX TEMPLATES (VM) - Gather facts
   setup:
   when: "inventory_hostname == proxmox_host"
@@ -45,7 +42,6 @@
               link-local: []
   when: "inventory_hostname == proxmox_host and template.tasks is defined"
 
-
 - set_fact:
     vm_mixin:
       recreate: yes
@@ -62,10 +58,10 @@
 - name: PROXMOX TEMPLATES (VM) - Start VM
   proxmox_kvm:
     proxmox_default_behavior: no_defaults
-    node:           "{{ proxmox_host }}"
-    api_host:       "localhost"
-    api_user:       "{{ proxmox.username }}"
-    api_password:   "{{ proxmox.password }}"
+    node: "{{ proxmox_host }}"
+    api_host: "localhost"
+    api_user: "{{ proxmox.username }}"
+    api_password: "{{ proxmox.password }}"
     name: "{{ template.vm.name }}"
     state: started
   when: "inventory_hostname == proxmox_host and template.tasks is defined"
@@ -116,7 +112,7 @@
     ansible_host: "{{ hostvars[proxmox_host]['provisionee_ip'] }}"
     ansible_ssh_user: netsoc
     ansible_ssh_private_key_file: "/tmp/ansible_{{ template.vm.name }}.id_ssh"
-    ansible_ssh_common_args: '-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
+    ansible_ssh_common_args: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
   when: "inventory_hostname == provisionee_host and template.tasks is defined"
 
 - name: PROXMOX TEMPLATES (VM) - Gather facts on VM
@@ -143,10 +139,10 @@
 
 - name: PROXMOX TEMPLATES (VM) - Stop VM
   proxmox_kvm:
-    node:           "{{ proxmox_host }}"
-    api_host:       "localhost"
-    api_user:       "{{ proxmox.username }}"
-    api_password:   "{{ proxmox.password }}"
+    node: "{{ proxmox_host }}"
+    api_host: "localhost"
+    api_user: "{{ proxmox.username }}"
+    api_password: "{{ proxmox.password }}"
     name: "{{ template.vm.name }}"
     state: stopped
     force: yes
@@ -163,6 +159,6 @@
     path: "{{ item }}"
     state: absent
   loop:
-    - "/tmp/ansible_{{ template.lxc.name }}.id_ssh"
-    - "/tmp/ansible_{{ template.lxc.name }}.id_ssh.pub"
+    - "/tmp/ansible_{{ template.vm.name }}.id_ssh"
+    - "/tmp/ansible_{{ template.vm.name }}.id_ssh.pub"
   when: "inventory_hostname == proxmox_host"
