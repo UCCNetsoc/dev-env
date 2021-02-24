@@ -5,6 +5,7 @@ if [[ $# -eq 0 ]] ; then
     exit 1
 fi
 
+./start-proxmox.sh
 
 DEVENV_DIR=`pwd`
 CLOUD_DIR=$(readlink -f $1)
@@ -24,6 +25,7 @@ cd $DEVENV_DIR
 $DEVENV_DIR/backing-services/freeipa/freeipa-delete-data.sh
 $DEVENV_DIR/backing-services/freeipa/freeipa-decompress-data.sh
 ./dev-env start ipa
+./dev-env stop proxy
 
 echo "version: \"3.7\"
 services:
@@ -37,4 +39,4 @@ services:
       - ${CLOUD_DIR}/config.sample.yml:/config.yml
 " > ./cloud/docker-compose.override.yml
 
-bash --init-file <(echo "source ${CLOUD_DIR}/bin/activate") -c "./start-proxmox.sh & ./dev-env up cloud api && cd ${CLOUD_DIR}"
+bash --init-file <(echo "source ${CLOUD_DIR}/bin/activate") -c "./dev-env up cloud api && cd ${CLOUD_DIR}"

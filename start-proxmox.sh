@@ -28,4 +28,7 @@ if [ ! -f "./backing-services/proxmox-ve/disk" ]; then
 fi
 
 echo "Starting Proxmox"
-./dev-env up proxmox 
+[[ $SHLVL -gt 2 ]] &&
+  (./dev-env up --no-start proxmox; ./dev-env start proxmox) ||
+  ./dev-env up proxmox 
+
