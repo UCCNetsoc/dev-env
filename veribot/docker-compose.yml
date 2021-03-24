@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+  veribot_api:
+    container_name: veribot.netsoc.localhost
+    image: uccnetsoc/veribot:dev-env
+    command: modd
+    environment:
+      - API_TITLE="Veribot API"
+      - API_DESCRIPTION="API to authenticate/authorize discord users"
+    ports:
+      - 8987:8080
+    volumes:
+      - /app
