@@ -8,6 +8,8 @@ services:
       - API_TITLE="Veribot API"
       - API_DESCRIPTION="API to authenticate/authorize discord users"
     ports:
-      - 8987:8080
+      - 80:8080
     volumes:
       - /app
+    depends_on:
+      - proxy
