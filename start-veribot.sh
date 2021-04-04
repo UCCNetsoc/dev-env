@@ -10,11 +10,16 @@ WD=`pwd`
 cd -
 
 if [ ! -f "./veribot/docker-compose.override.yml" ]; then
+    echo "Discord Bot Token from https://discord.com/developers/applications:" 
+    read DISCORD
+
 	echo "version: \"3.7\" 
 services:
   veribot_api:
     volumes:
       - ${WD}:/app
+    environment:
+      - DISCORD_TOKEN=${DISCORD}
 " > ./veribot/docker-compose.override.yml
 fi
 
