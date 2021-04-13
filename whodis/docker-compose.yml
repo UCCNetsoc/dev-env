@@ -1,11 +1,11 @@
 version: "3.7"
 services:
-  veribot_api:
-    container_name: api.veribot.netsoc.localhost
-    image: uccnetsoc/veribot:dev-env
+  whodis_api:
+    container_name: api.whodis.netsoc.localhost
+    image: uccnetsoc/whodis:dev-env
     command: modd
     environment:
-      - API_TITLE="Veribot API"
+      - API_TITLE="whodis API"
       - API_DESCRIPTION="API to authenticate/authorize discord users"
     ports:
       - 80:8080
