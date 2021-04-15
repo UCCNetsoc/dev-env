@@ -13,3 +13,4 @@ services:
       - /app
     depends_on:
       - proxy
+      - postgres
