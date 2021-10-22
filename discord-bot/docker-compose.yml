@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   discord-bot:
-    container_name: discord-bot.netsoc.local
+    container_name: discord-bot.netsoc.test
     image: uccnetsoc/discord-bot:dev-env
     command: modd # Hot reloading
     depends_on:

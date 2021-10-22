@@ -1,12 +1,12 @@
 version: "3.7"
 services:
   website:
-    container_name: netsoc.local
+    container_name: netsoc.test
     image: uccnetsoc/netsoc.co:dev-env
     command: npm start -- --port 80
     depends_on:
       - proxy
     environment:
-      - API_URL=http://discord-bot.netsoc.local
+      - API_URL=http://discord-bot.netsoc.test
     volumes:
       - /app

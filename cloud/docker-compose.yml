@@ -1,14 +1,14 @@
 version: "3.7"
 services:
   cloud:
-    container_name: cloud.netsoc.local
+    container_name: cloud.netsoc.test
     image: uccnetsoc/cloud-ui:dev-env
     command: npm run serve -- --port 80
     volumes:
       - /app
     environment:
-      VUE_APP_NETSOC_API_URL: "http://api.netsoc.local"
-      VUE_APP_OIDC_AUTHORITY: http://keycloak.netsoc.local:8080/auth/realms/freeipa
+      VUE_APP_NETSOC_API_URL: "http://api.netsoc.test"
+      VUE_APP_OIDC_AUTHORITY: http://keycloak.netsoc.test:8080/auth/realms/freeipa
       VUE_APP_HCAPTCHA_SITE_KEY: 232b4196-0bdf-475c-a440-de29c066e683
     depends_on:
       - api
@@ -18,7 +18,7 @@ services:
       - keycloak
       - postgres
   api:
-    container_name: api.netsoc.local
+    container_name: api.netsoc.test
     restart: always
     image: uccnetsoc/cloud-api:dev-env
     volumes:

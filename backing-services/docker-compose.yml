@@ -2,7 +2,7 @@ version: "3.7"
 services:
   postgres:
     image: postgres
-    container_name: postgres.netsoc.local
+    container_name: postgres.netsoc.test
     environment:
       POSTGRES_DB: promexporter
       POSTGRES_USER: root
@@ -14,18 +14,18 @@ services:
 
   proxy:
     image: wernight/dante
-    container_name: proxy.netsoc.local
+    container_name: proxy.netsoc.test
     depends_on:
       - whoami
     ports:
       - "0.0.0.0:1080:1080"
 
   whoami:
-    container_name: whoami.netsoc.local
+    container_name: whoami.netsoc.test
     image: containous/whoami
 
   proxmox:
-    container_name: proxmox.netsoc.local
+    container_name: proxmox.netsoc.test
     image: jkz0/qemu:latest
     cap_add:
       - NET_ADMIN
@@ -43,7 +43,7 @@ services:
       - proxy
 
   ipa:
-    container_name: ipa.netsoc.local
+    container_name: ipa.netsoc.test
     image: freeipa/freeipa-server:centos-8-4.8.4
     command: >
       ipa-server-install
@@ -52,11 +52,11 @@ services:
       --ds-password=netsoc_freeipa
       --admin-password=netsoc_freeipa
       --no-host-dns
-    hostname: ipa.netsoc.local
+    hostname: ipa.netsoc.test
     read_only: true
     user: root
     environment:
-      IPA_SERVER_HOSTNAME: ipa.netsoc.local
+      IPA_SERVER_HOSTNAME: ipa.netsoc.test
     tmpfs:
       - "/run"
       - "/tmp"
@@ -72,20 +72,20 @@ services:
       net.ipv6.conf.lo.disable_ipv6: 0
 
   ipaclient:
-    container_name: ipaclient.netsoc.local
-    hostname: ipaclient.netsoc.local
+    container_name: ipaclient.netsoc.test
+    hostname: ipaclient.netsoc.test
     image: adelton/freeipa-client
     restart: always
     depends_on:
       - ipa
     environment:
       PASSWORD: netsoc_freeipa
-      IPA_CLIENT_INSTALL_OPTS: --server=ipa.netsoc.local --domain=netsoc.local --force-join
+      IPA_CLIENT_INSTALL_OPTS: --server=ipa.netsoc.test --domain=netsoc.local --force-join
     volumes:
       - "./freeipa/home:/home/:Z"
 
   keycloak:
-    container_name: keycloak.netsoc.local
+    container_name: keycloak.netsoc.test
     image: uccnetsoc/keycloak:dev-env
     environment:
       KEYCLOAK_USER: netsoc_keycloak
@@ -94,14 +94,14 @@ services:
       DB_VENDOR: H2
     depends_on:
       - ipa
-    hostname: keycloak.netsoc.local
+    hostname: keycloak.netsoc.test
     volumes:
       - "./keycloak/:/tmp/keycloak/"
       - "/etc/localtime:/etc/localtime:ro"
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin.netsoc.local
+    container_name: phpmyadmin.netsoc.test
     environment:
       - PMA_ARBITRARY=1
     restart: always

@@ -20,13 +20,13 @@ services:
     volumes:
       - ${WD}:/app
     environment:
-      - API_URL=http://discord-bot.netsoc.local
+      - API_URL=http://discord-bot.netsoc.test
 " > ./website/docker-compose.override.yml
 fi
 
 if [[ $# -eq 2 ]] ; then
     if [[ $2 == 'bot' ]] ; then
-      sed -i "s/API_URL=.*/API_URL=http:\/\/discord-bot.netsoc.local/g" ./website/docker-compose.override.yml
+      sed -i "s/API_URL=.*/API_URL=http:\/\/discord-bot.netsoc.test/g" ./website/docker-compose.override.yml
       bash -c "./dev-env up website discord-bot"
     fi
     exit 0

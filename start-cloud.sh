@@ -22,8 +22,8 @@ fi
 
 cd $DEVENV_DIR
 ./dev-env stop ipa
-$DEVENV_DIR/backing-services/freeipa/freeipa-delete-data.sh
-$DEVENV_DIR/backing-services/freeipa/freeipa-decompress-data.sh
+# $DEVENV_DIR/backing-services/freeipa/freeipa-delete-data.sh
+# $DEVENV_DIR/backing-services/freeipa/freeipa-decompress-data.sh
 ./dev-env start ipa
 ./dev-env stop proxy
 
