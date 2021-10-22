@@ -121,10 +121,12 @@ ip addr
 
 apt install -y python3
 apt install -y golang
+apt install -y autoconf libtool build-essential libssl-dev libffi-dev python-dev
 apt install -y python3-pip
 apt install -y pkg-config
 apt install -y git
 apt install -y jq
+pip3 install --upgrade pip
 pip3 install -r /playbooks/requirements.txt
 cd /playbooks 
 if [ -f provision-nac.yml ]; then

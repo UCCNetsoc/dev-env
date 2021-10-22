@@ -32,6 +32,7 @@ services:
     devices:
       - /dev/net/tun
       - /dev/kvm
+    user: root
     volumes:
       - "./proxmox-ve/disk:/image"
     restart: always
