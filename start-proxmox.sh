@@ -10,7 +10,7 @@ else
 fi
 
 if [ ! -f "./backing-services/proxmox-ve/cloud-lxc-images/README.md" ]; then
-    git pull --recurse-submodules
+    git pull --recurse-submodules || true
 fi
 
 # check if the packer disk exists

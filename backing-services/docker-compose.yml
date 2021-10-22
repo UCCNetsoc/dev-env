@@ -29,6 +29,7 @@ services:
     image: jkz0/qemu:latest
     cap_add:
       - NET_ADMIN
+    privileged: true
     devices:
       - /dev/net/tun
       - /dev/kvm
