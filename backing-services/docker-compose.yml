@@ -39,21 +39,21 @@ services:
     restart: always
     ports:
       - "2200:22"
+      - "8006:443"
     depends_on:
       - proxy
 
   ipa:
     container_name: ipa.netsoc.test
-    image: freeipa/freeipa-server:centos-8-4.8.4
+    image: freeipa/freeipa-server:fedora-34
     command: >
       ipa-server-install
       --unattended
-      --realm=netsoc.local
+      --realm=netsoc.test
       --ds-password=netsoc_freeipa
       --admin-password=netsoc_freeipa
       --no-host-dns
     hostname: ipa.netsoc.test
-    read_only: true
     user: root
     environment:
       IPA_SERVER_HOSTNAME: ipa.netsoc.test
@@ -63,7 +63,7 @@ services:
     volumes:
       - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
       - "/etc/machine-id:/etc/machine-id:z"
-      - "./freeipa/data:/data:z"
+      - "./freeipa/data:/data"
     sysctls:
       #  Fixes:
       #  DEBUG The ipa-server-install command failed, exception:
@@ -80,9 +80,9 @@ services:
       - ipa
     environment:
       PASSWORD: netsoc_freeipa
-      IPA_CLIENT_INSTALL_OPTS: --server=ipa.netsoc.test --domain=netsoc.local --force-join
+      IPA_CLIENT_INSTALL_OPTS: --server=ipa.netsoc.test --domain=netsoc.test --force-join
     volumes:
-      - "./freeipa/home:/home/:Z"
+      - "./freeipa/home:/home/"
 
   keycloak:
     container_name: keycloak.netsoc.test
