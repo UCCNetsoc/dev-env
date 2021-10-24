@@ -43,46 +43,13 @@ services:
     depends_on:
       - proxy
 
-  ipa:
-    container_name: ipa.netsoc.test
-    image: freeipa/freeipa-server:fedora-34
-    command: >
-      ipa-server-install
-      --unattended
-      --realm=netsoc.test
-      --ds-password=netsoc_freeipa
-      --admin-password=netsoc_freeipa
-      --no-host-dns
-    hostname: ipa.netsoc.test
-    user: root
+  ldap:
+    container_name: ldap.netsoc.test
+    image: osixia/openldap:1.5.0
     environment:
-      IPA_SERVER_HOSTNAME: ipa.netsoc.test
-    tmpfs:
-      - "/run"
-      - "/tmp"
-    volumes:
-      - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
-      - "/etc/machine-id:/etc/machine-id:z"
-      - "./freeipa/data:/data"
-    sysctls:
-      #  Fixes:
-      #  DEBUG The ipa-server-install command failed, exception:
-      #  RuntimeError: IPv6 stack is enabled in the kernel but there is no interface that has ::1 address assigned.
-      #  Add ::1 address resolution to "lo" interface. You might need to enable IPv6 on the interface "lo" in sysctl.conf.
-      net.ipv6.conf.lo.disable_ipv6: 0
-
-  ipaclient:
-    container_name: ipaclient.netsoc.test
-    hostname: ipaclient.netsoc.test
-    image: adelton/freeipa-client
-    restart: always
-    depends_on:
-      - ipa
-    environment:
-      PASSWORD: netsoc_freeipa
-      IPA_CLIENT_INSTALL_OPTS: --server=ipa.netsoc.test --domain=netsoc.test --force-join
-    volumes:
-      - "./freeipa/home:/home/"
+      LDAP_ORGANISATION: Netsoc 
+      LDAP_DOMAIN: netsoc.test
+      LDAP_ADMIN_PASSWORD: admin 
 
   keycloak:
     container_name: keycloak.netsoc.test
@@ -90,10 +57,10 @@ services:
     environment:
       KEYCLOAK_USER: netsoc_keycloak
       KEYCLOAK_PASSWORD: netsoc_keycloak
-      KEYCLOAK_IMPORT: /tmp/keycloak/freeipa-realm.json
+      KEYCLOAK_IMPORT: /tmp/keycloak/ldap-realm-exported.json
       DB_VENDOR: H2
     depends_on:
-      - ipa
+      - ldap
     hostname: keycloak.netsoc.test
     volumes:
       - "./keycloak/:/tmp/keycloak/"

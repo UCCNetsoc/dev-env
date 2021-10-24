@@ -13,8 +13,7 @@ services:
     depends_on:
       - api
       - proxy
-      - ipa
-      - ipaclient
+      - vault
       - keycloak
       - postgres
   api:
