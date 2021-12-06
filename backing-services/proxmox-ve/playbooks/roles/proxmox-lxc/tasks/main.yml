@@ -12,7 +12,7 @@
 
 - set_fact:
     netw:
-      net0: "name=eth0,ip=dhcp,bridge=vmbr0,firewall=0"
+      net0: "name=eth0,ip=dhcp,bridge=vmbr1,firewall=0"
 
 - set_fact:
     lxc_already_exists: true

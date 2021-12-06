@@ -1,3 +1,10 @@
+- name: Add Provisionee host
+  hosts: localhost
+  tasks:
+    - add_host:
+        name: provisionee
+  tags:
+    - always
 - name: Provision Netsoc Cloud templates
   hosts: localhost, provisionee
   gather_facts: no
@@ -6,10 +13,10 @@
     - role: proxmox-templates
       vars:
         proxmox_host: localhost
-        provisionee_host: localhost
+        provisionee_host: provisionee
         proxmox:
-          username: "vagrant@pam"
-          password: vagrant
+          username: "root@pam"
+          password: password
         templates:
           - lxc:
               name: "ubuntu.container.template.netsoc.cloud"
