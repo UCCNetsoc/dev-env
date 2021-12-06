@@ -19,29 +19,12 @@ services:
       - whoami
     ports:
       - "0.0.0.0:1080:1080"
+    extra_hosts:
+      - "proxmox.netsoc.test:192.168.121.140"
 
   whoami:
     container_name: whoami.netsoc.test
     image: containous/whoami
-
-  proxmox:
-    container_name: proxmox.netsoc.test
-    image: jkz0/qemu:latest
-    cap_add:
-      - NET_ADMIN
-    privileged: true
-    devices:
-      - /dev/net/tun
-      - /dev/kvm
-    user: root
-    volumes:
-      - "./proxmox-ve/disk:/image"
-    restart: always
-    ports:
-      - "2200:22"
-      - "8006:443"
-    depends_on:
-      - proxy
 
   ldap:
     container_name: ldap.netsoc.test

@@ -5,8 +5,6 @@ if [[ $# -eq 0 ]] ; then
     exit 1
 fi
 
-./start-proxmox.sh
-
 DEVENV_DIR=`pwd`
 CLOUD_DIR=$(readlink -f $1)
 
@@ -21,10 +19,8 @@ if [ ! -d "./bin" ]; then
 fi
 
 cd $DEVENV_DIR
-./dev-env stop ipa
 # $DEVENV_DIR/backing-services/freeipa/freeipa-delete-data.sh
 # $DEVENV_DIR/backing-services/freeipa/freeipa-decompress-data.sh
-./dev-env start ipa
 ./dev-env stop proxy
 
 echo "version: \"3.7\"

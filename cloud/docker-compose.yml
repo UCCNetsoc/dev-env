@@ -28,3 +28,5 @@ services:
     environment:
       MODULE_NAME: "v1.main"
       VARIABLE_NAME: "api"
+    extra_hosts:
+      - "proxmox.netsoc.test:192.168.121.140"
