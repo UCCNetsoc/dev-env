@@ -109,7 +109,7 @@
 
 - set_fact:
     netw:
-      net0: "model=virtio,bridge=vmbr1,firewall=0"
+      net0: "model=virtio,bridge=vmbr0,firewall=0"
 
 # proxmox_kvm doesn't give you a way of setting net, virtio, ide, sata, scsi with the update: yes flag
 # and maybe description

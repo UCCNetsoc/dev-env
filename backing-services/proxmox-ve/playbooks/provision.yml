@@ -15,8 +15,8 @@
         proxmox_host: localhost
         provisionee_host: provisionee
         proxmox:
-          username: "root@pam"
-          password: password
+          username: "vagrant@pam"
+          password: vagrant
         templates:
           - lxc:
               name: "ubuntu.container.template.netsoc.cloud"
