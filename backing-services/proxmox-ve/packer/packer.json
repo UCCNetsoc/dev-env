@@ -45,9 +45,9 @@
       "name": "proxmox-ve",
       "qemuargs": [["-cpu", "host"]],
       "shutdown_command": "poweroff",
-      "ssh_password": "password",
-      "ssh_timeout": "60m",
+      "ssh_timeout": "3m",
       "ssh_username": "root",
+      "ssh_password": "password",
       "type": "qemu"
     }
   ],
@@ -63,8 +63,8 @@
     }
   ],
   "variables": {
-    "disk_size": "300375",
-    "iso_checksum": "4720c04c16ea4c93248e0a3b5e74586ce9177db752253e39079ae424a2c92157",
-    "iso_url": "https://www.proxmox.com/en/downloads?task=callelement&format=raw&item_id=612&element=f85c494b-2b32-4109-b8c1-083cca2b7db6&method=download&args[0]=b6ff76d69c45b5c0978028eea59e887b"
+    "disk_size": "10375",
+    "iso_checksum": "ab71b03057fdeea29804f96f0ff4483203b8c7a25957a4f69ed0002b5f34e607",
+    "iso_url": "https://www.proxmox.com/en/downloads?task=callelement&format=raw&item_id=589&element=f85c494b-2b32-4109-b8c1-083cca2b7db6&method=download&args[0]=410beb9e8b877cf6e789a9c07aa3cc3e"
   }
 }
