@@ -74,15 +74,15 @@
 # The butt-pucker zone
 - name: PROXMOX TEMPLATES (LXC) - Test provisionee_host to ensure user is not an idiot and provisioning the proxmox host instead of the container (1/2)
   shell: "! which pvesh" # errors if the pvesh binary exists
-  when: "inventory_hostname == provisionee_host and inventory_hostname != proxmox_host"
+  when: "inventory_hostname == provisionee_host"
 
 - name: PROXMOX TEMPLATES (LXC) - Test provisionee_host to ensure user is not an idiot and provisioning the proxmox host instead of the container (2/2)
   shell: "! which pveam" # errors if the pveam binary exists
-  when: "inventory_hostname == provisionee_host and inventory_hostname != proxmox_host"
+  when: "inventory_hostname == provisionee_host"
 
 - name: PROXMOX TEMPLATES (LXC) - Provision LXC
   include_tasks: "{{ template.tasks }}"
-  when: "inventory_hostname == provisionee_host and inventory_hostname != proxmox_host"
+  when: "inventory_hostname == provisionee_host"
   # ^^^ !!! DO NOT REMOVE THIS LINE !!! ^^^
   # WILL CAUSE CATASTROPHIC DAMAGE TO THE PROXMOX HOST IF REMOVED
 

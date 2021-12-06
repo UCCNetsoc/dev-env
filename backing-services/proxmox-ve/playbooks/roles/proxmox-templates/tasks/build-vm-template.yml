@@ -122,18 +122,18 @@
 # The butt-pucker zone
 - name: PROXMOX TEMPLATES (VM) - Test provisionee_host to ensure user is not an idiot and provisioning the proxmox host instead of the vm (1/2)
   shell: "! which pvesh" # errors if the pvesh binary exists
-  when: "inventory_hostname == provisionee_host and inventory_hostname != proxmox_host and template.tasks is defined"
+  when: "inventory_hostname == provisionee_host and template.tasks is defined"
 
 - name: PROXMOX TEMPLATES (VM) - Test provisionee_host to ensure user is not an idiot and provisioning the proxmox host instead of the vm (2/2)
   shell: "! which pveam" # errors if the pveam binary exists
-  when: "inventory_hostname == provisionee_host and inventory_hostname != proxmox_host and template.tasks is defined"
+  when: "inventory_hostname == provisionee_host and template.tasks is defined"
 
 - name: PROXMOX TEMPLATES (VM) - Provision VM
   include_tasks: "{{ template.tasks }}"
   args:
     apply:
       become: yes
-  when: "inventory_hostname == provisionee_host and inventory_hostname != proxmox_host and template.tasks is defined"
+  when: "inventory_hostname == provisionee_host and template.tasks is defined"
   # ^^^ !!! DO NOT REMOVE THIS LINE !!! ^^^
   # WILL CAUSE CATASTROPHIC DAMAGE TO THE PROXMOX HOST IF REMOVED
 
